@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Pyscriptを使って割り勘の仕方を教えてくれるアプリです。"/>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>割り勘ツール</title>
+
+<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+
+<style type="text/css">
+body {margin: 0;padding: 0;}
+#outer {padding: 0;border-top: 2px solid #7a9f37;
+line-height: 1.6;font-family: 'メイリオ', 'Hiragino Kaku Gothic Pro', Meiryo, 'ヒラギノ角ゴ Pro W3', 'MS PGothic', 'MS UI Gothic', Helvetica, Arial, sans-serif;font-size: 93.75%;}
+#header {padding: 0;border-bottom:1px #ccc solid;}
+#content {background-color:#f8f9fa;}
+main {display:block;}
+#main {background-color: #fff;margin: 0 auto;width: 800px;padding: 0;}
+#inner {padding: 16px 30px 10px 30px;display:block;}
+p {margin: 1em 0;word-wrap:break-word;}
+#logo {font-size: 16px;	padding: 22px 0 22px 0;margin: 0 auto;width: 740px;}
+#logo a {font-weight: bold;	color: #8c0000;	text-decoration: none;padding-left:10px;}
+#logo a:hover {text-decoration: underline;}
+h1 {font-size: 26px;padding: 0;margin:0;}
+h2, h3 {font-size: 24px;padding: 0;border-bottom: 1px solid #ccc;}
+
+
+
+<!--追加bigin-->
+h1{
+  font-size: 26px;padding: 0;margin:0;
+  color: #ff0000;
+  background-color: #ffffff;
+}
+
+.btn{
+  color: #fff;
+  background-color: #eb6100;
+  width: 100px;
+  height: 30px;
+}
+.textlines {
+    border: 2px solid #0a0;
+    width: 400px;
+}
+
+<!--追加end-->
+
+
+
+h1,p,a{overflow-wrap: break-word;}
+.border{
+outline:solid 2px blue;
+height:30px;
+}
+@media screen and (min-width: 960px) {
+	/* 960px以上に適用されるCSS（PC用） */
+.max-w-xs mx-auto mt-4 {width:100%;padding: 0;}
+
+
+}
+</style>
+</head>
+
+<body>
+<main class="max-w-xs mx-auto mt-4">
+
+
+<div id="outer">
+ <div id="content">
+  
+  <div id="inner">
+	<h1>割り勘ツール</h1>
+    <br>
+    <p>「名前」と「金額」にそれぞれカンマ（,)区切りでデータを入力して実行ボタンを押してください。下の例は4人の場合です</p><br>
+  <div>
+    <label>名前: 
+    <input type="text" class='textlines' value="" id="xvalue" name="xvalue"> </label>
+    <p>　　例: 侑也,景介,セッシー,YOSHINARI</p>
+  </div>
+      <br>
+  <div>
+    <label>金額: 
+    <input type="text" class='textlines' value="" id="yvalue" name="yvalue"></label>
+    <p>　　例: 5000,3000,0,0</p>
+  </div>
+    <br>
+
+<div>
+  <button id ="plot" class="btn" pys-onClick="execution">実行</button>
+</div>
+
+  <br>
+  <h2>~清算方法~</h2>
+    <br>
+  <div id="0"></div>
+  <div id="1"></div>
+  <div id="2"></div>
+  <div id="3"></div>
+  <div id="4"></div>
+  <div id="5"></div>
+  <div id="6"></div>
+  <div id="7"></div>
+  <div id="8"></div>
+  <div id="9"></div>
+  <div id="10"></div>
+
+</div> 
+</div>
+</div>
+</main>
+
+<py-script>
+# モジュール
+import math
+
+def execution(*ags,**kws):
+  x_element = Element("xvalue")
+  y_element = Element("yvalue")
+  x = x_element.element.value
+  y = y_element.element.value
+  names = x.split(",")
+  paid = y.split(",")
+  paid = list(map(int, paid))
+  dic = {name: p for name, p in zip(names, paid)}
+  #pyscript.write(5, dic)
+  main(dic)
+ 
+# メイン関数
+def main(dic):
+  settle_msg = []
+  paid_list = list(dic.values())
+  name_list = list(dic.keys())
+  total = sum(paid_list)          # 合計金額
+  head_count = len(name_list)     # 合計人数
+  split_bill = total / head_count # 割り勘額
+  split_bill_round = math.ceil(split_bill)
+  #pyscript.write(6, split_bill_round)
+
+  for i in range(head_count):
+    dic[name_list[i]] -= split_bill_round
+
+  while (min(dic.values()) < 0):
+    min_person = min(dic, key=dic.get)
+    max_person = max(dic, key=dic.get)
+    will_paid = min(dic.values())*-1
+    will_accept = max(dic.values())
+
+    if will_accept > will_paid:
+      settle_msg.append(f"{min_person}さん → {max_person}さん     ¥{will_paid}")
+      dic[min_person] += will_paid
+      dic[max_person] -= will_paid
+        
+    elif will_accept < will_paid:
+      if will_accept != 0:
+          settle_msg.append(f"{min_person}さん → {max_person}さん     ¥{will_accept}")
+      dic[min_person] += will_accept
+      dic[max_person] -= will_accept
+
+    elif will_accept == will_paid:
+      if will_paid != 0:
+          settle_msg.append(f"{min_person}さん → {max_person}さん     ¥{will_paid}")
+      dic[min_person] += will_paid
+      dic[max_person] -= will_paid
+    
+    else:
+      raise Exception
+
+    if will_accept == 0:
+      break
+
+
+  for i,msg in enumerate(settle_msg):
+    pyscript.write(str(i), msg)
+  for j in range(i+1, 10):
+    pyscript.write(str(j), "")
+</py-script>
+
+</body>
+</html>
