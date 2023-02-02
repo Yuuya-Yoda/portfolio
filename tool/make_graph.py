@@ -61,7 +61,7 @@ LABEL2 = 'smpdgjd-sawara-workers-cluster2'
 GRAPH_TYPE2 = 'plot'
 LINE_WIDTH2 = 3
 
-# グラフ2
+# グラフ3
 X3_LIST = [i for i in range(74)]
 Y3_LIST = [0, 240, 560, 880, 880, 1040, 1200,
         1280, 1360, 1440, 1520, 1600, 1680, 1760, 1840, 1920, 2000,
