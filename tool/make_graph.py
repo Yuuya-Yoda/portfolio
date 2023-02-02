@@ -73,7 +73,7 @@ Y3_LIST = [0, 240, 560, 880, 880, 1040, 1200,
         2000, 2000, 2000, 2000, 2000, 1000, 0
         ]
 MARKER3 = "v"
-COLOR3 = "green"
+COLOR3 = "lightgreen"
 LABEL3 = '別リージョン'
 GRAPH_TYPE3 = 'plot'
 LINE_WIDTH3 = 3
