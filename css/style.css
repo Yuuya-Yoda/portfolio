@@ -14,11 +14,18 @@ a {
 img {
   max-width: 100%;
   height: auto;
-  vertical-align: bottom;
   border-style: none;
+  margin-bottom: 10px;
 }
 
+strong {
+  color: #E54343;
+  font-weight: bold;
+}
 
+h3 {
+  margin-top: 15px;
+}
 
 .pc-only {
   display: block;
@@ -57,6 +64,16 @@ img {
   font-weight: bold;
   line-height: 1;
   margin-bottom: 40px;
+  text-align: center;
+  letter-spacing: .05em;
+  color: #333;
+}
+
+.title-bottom-small {
+  font-size: 34px;
+  font-weight: bold;
+  line-height: 1;
+  margin-bottom: 5px;
   text-align: center;
   letter-spacing: .05em;
   color: #333;
@@ -143,7 +160,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 85vh;
+  height: 40vh;
   text-align: center;
 }
 
@@ -169,6 +186,38 @@ img {
 .mv-text {
   font-size: 16px;
   line-height: 1.8;
+}
+
+/*--------------------------------
+ サブビジュアル
+---------------------------------*/
+.sv-subtitle {
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  margin-bottom: 40px;
+  letter-spacing: .08em;
+  text-align: center;
+}
+
+/*--------------------------------
+ ロゴ
+---------------------------------*/
+
+.container-logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img img {
+    width: 25px; /* 画像の幅を調整 */
+    height: auto; /* 高さを自動調整 */
+    margin-top: 10px;
+    margin-right: 10px; /* 画像とテキストの間隔 */
+}
+
+.name {
+    font-size: 12px; /* テキストのフォントサイズ */
 }
 
 /*--------------------------------
@@ -199,8 +248,14 @@ img {
   border: 1px solid #e6e6e6;
 }
 
+.works-date {
+  font-size: 15px;
+  margin-top: 8px;
+  text-align: right
+}
+
 .works-name {
-  font-size: 12px;
+  font-size: 18px;
   font-weight: bold;
   margin-top: 8px;
 }
@@ -208,6 +263,128 @@ img {
 .works-info {
   font-size: 10px;
   margin-top: 5px;
+}
+
+/*--------------------------------
+Posts
+---------------------------------*/
+.posts-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: -40px;
+}
+
+.posts-list .blue-title {
+  display: block;
+  margin-top: 5px;
+  width: 80px;
+  float: left;
+  font-size: 10px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  line-height: 100%;
+  background-color: rgb(78, 142, 196);
+  padding: 5px 0px;
+}
+
+.posts-list .darkred-title {
+  display: block;
+  margin-top: 5px;
+  width: 80px;
+  float: left;
+  font-size: 10px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  line-height: 100%;
+  background-color:  #ff8a65;
+  padding: 5px 0px;
+}
+
+.posts-list .mediumslateblue-title {
+  display: block;
+  margin-top: 5px;
+  width: 80px;
+  float: left;
+  font-size: 10px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  line-height: 100%;
+  background-color:  #7b68ee;
+  padding: 5px 0px;
+}
+
+.posts-list .mrsgreen-title {
+  display: block;
+  margin-top: 5px;
+  width: 80px;
+  float: left;
+  font-size: 10px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  line-height: 100%;
+  background-color:  #005731;
+  padding: 5px 0px;
+}
+
+.posts-item {
+  width: 48.4126%;
+  margin-right: 2.58730%;
+  margin-bottom: 40px;
+  color: #333;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+.posts-item:hover {
+  opacity: .9;
+}
+
+.posts-item:nth-of-type(2n) { /* 2n → 2列目の投稿は右に余白が無くなる。 */
+  margin-right: 0;
+}
+
+.posts-img img {
+  border: 1px solid #e6e6e6;
+}
+
+.posts-date {
+  font-size: 10px;
+  margin-top: 8px;
+  text-align: right
+}
+
+.posts-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.posts-info {
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+.sns-box {
+  background-color: #f5f5f5;
+  overflow: hidden;
+  margin: 10px 0 30px 0;
+  padding: 7px 16px 0 16px;
+}
+
+.toc-area {
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  padding: 35px;
+  font-size: 0.85em;
+  line-height: 180%;
+  box-sizing: border-box;
+  margin-bottom: 65px;
+}
+
+.toc-area p {
+  font-weight: bold;
+  text-align: center;
 }
 
 /*--------------------------------
@@ -334,6 +511,20 @@ img {
   padding: 0 20px;
 }
 
+.article-container .blue-title {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  width: 80px;
+  float: center;
+  font-size: 10px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  line-height: 100%;
+  background-color: rgb(78, 142, 196);
+  padding: 5px 0px;
+}
+
 .article-title {
   margin-bottom: 30px;
   text-align: center;
@@ -373,8 +564,83 @@ img {
   margin-bottom: 30px;
 }
 
+.article-body img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: bottom;
+  border-style: none;
+  text-align: center;
+}
+
 .home-link {
   text-align: center;
+}
+
+.img-right {
+    float: right;           /* 画像を右に寄せる */
+    width: 35%;             /* 画像の幅を全体の幅の35%に指定 */
+    margin: 0 0 10px 10px;  /* 余白を指定（上0、右0、下10px、左10px） */
+}
+
+/*--------------------------------
+ パンくずリスト
+---------------------------------*/
+.bread-crumb {
+  background-color: #f5f5f5;
+  padding-top: 98px;
+  text-align: center; /* パンくずリストを中央に配置 */
+  clear: both;
+}
+
+.bread-crumb ul {
+  display: inline-block; /* リストを横並びにする */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bread-crumb ul li {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+.bread-crumb a {
+  color: #333;
+  text-decoration: none;
+  border-bottom: 2px solid #333; /* 下線を追加 */
+}
+
+.bread-crumb span {
+  color: #333;
+}
+
+.bread-crumb li:not(:last-child):after {
+  content: "›"; /* 区切り記号を追加 */
+  margin: 0 5px;
+}
+
+/*--------------------------------
+ コードブロック
+---------------------------------*/
+pre {
+  background-color: black; /* 背景色 */
+  padding: 10px; /* 余白 */
+  text-align: left;
+  white-space: pre-wrap; /* タブや改行を保持 */
+}
+
+.code-block span {
+  text-align: left;
+}
+
+.code-block .pink {
+  color: #c71585;
+  text-align: left;
+}
+
+.code-block .cp {
+  color: #979797;
 }
 
 /*media Queries 767
@@ -475,6 +741,25 @@ img {
   }
 
   .works-item {
+    flex: 0 0 48%;
+    margin-right: 0;
+    margin-bottom: 30px;
+  }
+
+  /* Posts */
+  .posts-name {
+    font-size: 12px;
+  }
+
+  .posts-info {
+    margin-top: 3px;
+  }
+
+  .posts-list {
+    justify-content: space-between;
+  }
+
+  .posts-item {
     flex: 0 0 48%;
     margin-right: 0;
     margin-bottom: 30px;

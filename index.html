@@ -8,31 +8,41 @@
   <meta property='og:url' content='URLが入る'>
   <meta property='og:description' content='YUYA YODAのポートフォリオサイトです。'>
   <meta property="og:image" content="img/ogp.png">
-  <meta name="description" content="YUYA YODAのポートフォリオサイトです" />
-  <title>YUYA YODA ポートフォリオ</title>
+  <meta name="description" content="Yuya Yodaのポートフォリオサイトです" />
+  <title>Welcome to my portfolio and blog page!</title>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
   <link href="css/ress.css" media="all" rel="stylesheet" type="text/css" />
   <link href="css/style.css" media="all" rel="stylesheet" type="text/css" />
-  <link rel="shortcut icon" href="img/favicon.ico" />
-  <link rel=”canonical” href=”URLが入る” />
+  <link rel="shortcut icon" href="img/YPP_logo.png" />
+  <link rel=”canonical” href=”https://www.yuya-portfolio.com/” />
 </head>
 
 <body>
+  <!-- wrapper -->
   <div class="wrapper">
 
     <!-- header -->
     <header class="header ">
-      <div class="container">
+      <div class="container"> 
         <h1 class="header-logo">
-          <a href=".">Yuya Yoda</a>
+          <div class="container-logo">
+            <a href="#" class="logo-img">
+                <img src="img/YPP_logo.png" alt="" />
+            </a>
+            <a href="#">
+              <div class="name">Yuya Yoda</div>
+            </a>
+          </div>
         </h1>
         <nav class="gnav">
           <ul class="gnav-list">
-            <li class="gnav-item"><a href="#works">WORKS</a></li>
-            <li class="gnav-item"><a href="#skill">SKILL</a></li>
+            <li class="gnav-item"><a href="#">HOME</a></li>
             <li class="gnav-item"><a href="#about">ABOUT</a></li>
+            <li class="gnav-item"><a href="works.html">WORKS</a></li>
+            <li class="gnav-item"><a href="posts.html">POSTS</a></li>
+            <!--<li class="gnav-item"><a href="#skill">SKILL</a></li> -->
             <li class="gnav-item"><a href="#contact">CONTACT</a></li>
           </ul>
         </nav>
@@ -40,48 +50,110 @@
     </header>
     <!-- /header -->
 
+    <!-- main -->
     <main class="content">
 
-      <!-- mv -->
+      <!-- mv(メインビジュアル) -->
       <div class="mv">
         <div class="mv-container">
           <p class="mv-title">YUYA YODA</p>
-          <p class="mv-subtitle">PORTFOLIO</p>
+          <p class="mv-subtitle">Welcome to my portfolio and blog page!</p>
           <p class="mv-text">
-            <!--閲覧<br class="sp-only">ありがとうございます。<br> -->
           </p>
         </div>
       </div>
       <!-- /mv -->
 
+      <!-- about -->
+      <section class="about section" id="about">
+        <div class="container">
+          <h2 class="title">ABOUT</h2>
+          <div class="profile">
+            <p class="profile-img">
+              <img src="img/profile1.jpg" alt="">
+            </p>
+            <div class="profile-body">
+              <p>
+                &nbsp; はじめまして！よだゆうやと申します！
+                <br>&nbsp; 趣味は音楽を聞くことで、特にMrs. GREEN APPLEとgo!go!vanillasが好きです！今年(2023)はたくさんのライブや音楽フェスに行くのでとても楽しみです🍏🍦
+                <br>&nbsp; スポーツはサッカー4年、バスケ3年、水泳8年、陸上3年、体操3年と幅広くやっていたので基本体を動かすことは好きです！スノボとかも好きです🏂
+                <br>&nbsp; 大学では情報学を専攻し、主にプログラミングやデータサイエンスなどを学びました。4年次の研究では金融に関するデータ分析をしていました。
+                大学生活ではとにかく学外に活動を広げることを意識していて、企業主催のハッカソン、共同研究、学会発表など様々な活動に参加しました。
+                <br>&nbsp; そこで学んだ知識を活かし、大学生活後半は企業との共同研究で開発or研究に没頭しています。研究費が出るので、今までやっていたスーパーのアルバイトはすぐに辞めました。
+                現在はたくさんのライブとフェスに行くために頑張ってます！
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /about -->
+
       <!-- works -->
       <section class="works section" id="works">
         <div class="container">
-          <h2 class="title">WORKS</h2>
+          <h2 class="title-bottom-small">WORKS</h2>
+          <p class="sv-subtitle">おすすめ記事</p>
           <div class="works-list">
-            <a class="works-item" href="works-template.html">
-              <div class="works-img"><img src="img/hacku_2020.png" alt="" /></div>
+            <a class="works-item" href="works_articles/works-hacku2020.html">
+              <p class="works-date">2021/3/27</p>
+              <div class="works-img"><img src="img/2020online5.jpg" alt="" /></div>
               <p class="works-name">Open Hack U 2020 Online Vol.5</p>
               <!-- <p class="works-info">Design / Coding(Responsive)</p> -->
             </a>
-            <a class="works-item" href="works-template.html">
+            <a class="works-item" href="works_articles/works-hacku2020.html">
+              <p class="works-date">2022/10/31</p>
               <div class="works-img"><img src="img/works-dummy-thumb.jpg" alt="" /></div>
               <p class="works-name">Sensing Solution アイデアソン・ハッカソン2022</p>
             </a>
-            <a class="works-item" href="works-template.html">
+            <a class="works-item" href="works_articles/works-hacku2020.html">
+              <p class="works-date">2022/7/2</p>
               <div class="works-img"><img src="img/works-dummy-thumb.jpg" alt="" /></div>
               <p class="works-name">スマホでグリッド 共同研究</p>
-            </a>
-            <a class="works-item" href="works-template.html">
-              <div class="works-img"><img src="img/works-dummy-thumb.jpg" alt="" /></div>
-              <p class="works-name">Pyscriptを使った自作ツール</p>
             </a>
           </div>
         </div>
       </section>
       <!-- /works -->
 
-      <!-- skill -->
+      <!-- post -->
+      <section class="posts section" id="posts">
+        <div class="container">
+          <h2 class="title-bottom-small">POSTS</h2>
+          <p class="sv-subtitle">おすすめ記事</p>
+          <div class="posts-list">
+            <a class="posts-item" href="posts_articles\posts-aws_handson1.html">
+              <p class="blue-title">プログラミング</p>
+              <p class="posts-date">2021/3/27</p>
+              <p class="posts-name">AWS Lambda, API Gatewayのハンズオン</p>
+              <div class="posts-img"><img src="img/posts-aws_handson1_1.jpg" alt="" /></div>
+            </a>
+            <a class="posts-item" href="works_articles/works-hacku2020.html">
+              <p class="darkred-title">居酒屋巡り</p>
+              <p class="posts-date">2021/3/27</p>
+              <p class="posts-name">ビットコインとは？ビットコインを支えるブロックチェーンの仕組み</p>
+              <div class="posts-img"><img src="img/works-dummy-thumb.jpg" alt="" /></div>
+            </a>
+            <a class="posts-item" href="works_articles/works-hacku2020.html">
+              <p class="mediumslateblue-title">ご飯巡り</p>
+              <p class="posts-date">2021/3/27</p>
+              <p class="posts-name">ビットコインとは？ビットコインを支えるブロックチェーンの仕組み</p>
+              <div class="posts-img"><img src="img/works-dummy-thumb.jpg" alt="" /></div>
+            </a>
+            <a class="posts-item" href="works_articles/works-hacku2020.html">
+              <p class="mrsgreen-title">音楽</p>
+              <p class="posts-date">2021/3/27</p>
+              <p class="posts-name">ビットコインとは？ビットコインを支えるブロックチェーンの仕組み</p>
+              <div class="posts-img"><img src="img/works-dummy-thumb.jpg" alt="" /></div>
+            </a>
+          </div>
+        </div>
+      </section>
+      <!-- /post -->
+
+      <!-- Google AdSense広告コードの挿入 
+      <script async src="URL_TO_YOUR_ADSENSE_CODE"></script> -->
+
+      <!-- skill 
       <section class="skill section" id="skill">
         <div class="container">
           <h2 class="title">SKILL</h2>
@@ -130,28 +202,7 @@
           </div>
         </div>
       </section>
-      <!-- /skill -->
-
-      <!-- about -->
-      <section class="about section" id="about">
-        <div class="container">
-          <h2 class="title">ABOUT</h2>
-          <div class="profile">
-            <p class="profile-img">
-              <img src="img/profile.jpg" alt="">
-            </p>
-            <div class="profile-body">
-              <p>
-                テキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入ります。
-              </p>
-              <p>
-                テキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入ります。
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- /about -->
+       /skill -->
 
       <!-- contact -->
       <section class="contact section" id="contact">
@@ -161,17 +212,21 @@
             お問い合わせは、<br class="sp-only">SNSかメールにてお願いいたします。
           </p>
           <div class="contact-list">
-            <a class="contact-item" href="https://twitter.com/" target="_blank" rel="noopener">Twitter</a>
-            <a class="contact-item" href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
-            <span class="contact-item">xxxxxx@gmail.com</span>
+            <!-- <a class="contact-item" href="https://twitter.com/" target="_blank" rel="noopener">Twitter</a> -->
+            <a class="contact-item" href="https://www.instagram.com/yuya_.1026/" target="_blank" rel="noopener">Instagram</a>
+            <span class="contact-item">yuya0yy4026@gmail.com</span>
           </div>
         </div>
       </section>
       <!-- /contact -->
+
+      <!-- ページ上部に移動 -->
       <div class="page-top" id="js-page-top">
         <span class="material-icons-outlined">expand_less</span>
       </div>
+      <!-- /ページ上部に移動 -->
     </main>
+    <!-- /main -->
 
     <!-- footer -->
     <footer class="footer">
@@ -180,7 +235,10 @@
     <!-- /footer -->
 
   </div>
+  <!-- /wrapper -->
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script type='text/javascript' src="js/script.js"></script>
+
 </body>
 </html>
