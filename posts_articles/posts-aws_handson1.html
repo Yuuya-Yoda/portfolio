@@ -51,7 +51,7 @@
             <li class="gnav-item"><a href="../index.html">HOME</a></li>
             <li class="gnav-item"><a href="../index.html#about">ABOUT</a></li>
             <li class="gnav-item"><a href="../works.html">WORKS</a></li>
-            <li class="gnav-item"><a href="#">POSTS</a></li>
+            <li class="gnav-item"><a href="../posts.html">POSTS</a></li>
             <!-- <li class="gnav-item"><a href="#skill">SKILL</a></li> -->
             <li class="gnav-item"><a href="../index.html#contact">CONTACT</a></li>
           </ul>
@@ -97,9 +97,9 @@
             <p>目次</p>
             <ol>
               <li><a href="#toc1">事前準備</a></li>
-              <li><a href="#toc2">使用方法</a></li>
-              <li><a href="#toc3">主な開発環境</a></li>
-              <li><a href="#toc4">発展性</a></li>
+              <li><a href="#toc2">Lambda関数を作成しよう</a></li>
+              <li><a href="#toc3">APIを作成しよう</a></li>
+              <li><a href="#toc4">Webページで実行確認してみよう</a></li>
               <li><a href="#toc5">おわりに</a></li>
             </ol>
           </div>
@@ -112,20 +112,163 @@
             <div class="code-block">
               <pre>
 <code>
-<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="white">&lt;!DOCTYPE html&gt;</span>
 <span class="pink">&lt;html&gt;</span>
 
 <span class="pink">&lt;body&gt;</span>
-<span class="pink">&lt;h1&gt;</span><span class="cp">ハンズオン</span><span class="pink">&lt;/h1&gt;</span>
+  <span class="pink">&lt;h1&gt;</span>ハンズオン<span class="pink">&lt;/h1&gt;</span>
+  <span class="pink">&lt;p&gt;</span>
+    <span class="white">&lt;!-- "ul_nodot"とは下の<span class="white">&lt;style&gt;</span>の所で定義しており、段落の点を消す設定にしている。 --&gt;</span>
+    <span class="white">&lt;ul class="ul_nodot"&gt;</span>
+      <span class="pink">&lt;li&gt;</span><span class="white">&lt;input id="hands_on_button" type="button" value="Lambda関数を呼ぶ" onclick="get_id_name()"&gt;</span><span class="pink">&lt;/li&gt;</span>
+      <span class="white">&lt;li id="hands_on_1"&gt;</span>ジョブID → ???<span class="white">&lt;/li&gt;</span>
+      <span class="white">&lt;li id="hands_on_2"&gt;</span>ユーザ名 → ???<span class="white">&lt;/li&gt;</span>
+      <span class="pink">&lt;br&gt;</span>
+      <span class="pink">&lt;li&gt;</span><span class="white">&lt;input id="hands_on_button_2" type="button" value="ジョブIDとユーザ名をリセット" onclick="reset_id_name()"&gt;</span><span class="pink">&lt;/li&gt;</span>
+    <span class="pink">&lt;/ul&gt;</span>
+  <span class="pink">&lt;/p&gt;</span>
+
+  <span class="pink">&lt;p&gt;</span>
+    <span class="pink">&lt;br&gt;</span>
+<span class="white">    コンソール出力</span>
+    <span class="pink">&lt;small&gt;</span>※「CTRL+SHIFT+c」を押して、Consoleから見ることも出来ます。<span class="pink">&lt;/small&gt;</span>
+    <span class="pink">&lt;br&gt;</span>
+    <span class="white">&lt;div class="scroll_vertical"&gt;</span>
+      <span class="white">&lt;ul id="id_stdout" class="ul_console"&gt;</span><span class="white">&lt;/ul&gt;</span>
+    <span class="white">&lt;/div&gt;</span>
+  <span class="pink">&lt;/p&gt;</span>
+
+  <span class="pink">&lt;!-- js部分 --&gt;</span>
+  <span class="pink">&lt;script&gt;</span>
+<span class="white">    // 定数</span>
+<span class="white">    const URL_API_BASE = '自分で設定しよう！';  // API GateWayを呼び出すためのURLは、ステージの所から確認しよう！</span>
+<span class="white">    const NAME = "yuya";</span>
+<span class="white">    const ID = 100;</span>
+
+<span class="white">    // 関数1</span>
+<span class="white">    async function get_id_name() {</span>
+<span class="white">      // ログ表示 (CTRL+SHIFT+Cで開いた先のconsoleで確認可!)</span>
+<span class="white">      console.log("get_id_name()が呼ばれました。");</span>
+
+<span class="white">      // Lambda関数を呼ぶ</span>
+<span class="white">      const USER_INFO = await (await fetch(URL_API_BASE + '/hands_on', {</span>
+<span class="white">        headers: { "Content-Type": "application/json" },</span>
+<span class="white">        method: "POST",               // メソッドタイプ (ほぼ"POST"しか使わない)</span>
+<span class="white">        body: `{"id": ${ID}, "name": "${NAME}"}`  // Lambda関数に渡すイベントjson</span>
+        })).text().catch((reason) =&gt;</span> {
+<span class="white">          console.log(`エラー発生 → ${reason}`)</span>
+<span class="white">        });</span>
+
+<span class="white">      // 文字列をリストに変換</span>
+<span class="white">      const USER_INFO_LIST = JSON.parse(USER_INFO)</span>
+
+<span class="white">      // webページへの反映</span>
+      document.getElementById("hands_on_1").innerHTML = `<span class="white">&lt;li id="hands_on_1"&gt;</span>ジョブID → ${USER_INFO_LIST[0]}<span class="white">&lt;/li&gt;</span>`;
+      document.getElementById("hands_on_2").innerHTML = `<span class="white">&lt;li id="hands_on_2"&gt;</span>ユーザ名 → ${USER_INFO_LIST[1]}<span class="white">&lt;/li&gt;</span>`;
+<span class="white">    }</span>
+
+<span class="white">    // 関数2</span>
+<span class="white">    async function reset_id_name() {</span>
+<span class="white">      // ログ表示 (CTRL+SHIFT+Cで開いた先のconsoleで確認可!)</span>
+<span class="white">      console.log("reset_id_name()が呼ばれました。")</span>
+
+<span class="white">      // webページへの反映</span>
+      document.getElementById("hands_on_1").innerHTML = `<span class="white">&lt;li id="hands_on_1"&gt;</span>ジョブID → ???<span class="white">&lt;/li&gt;</span>`;
+      document.getElementById("hands_on_2").innerHTML = `<span class="white">&lt;li id="hands_on_2"&gt;</span>ユーザ名 → ???<span class="white">&lt;/li&gt;</span>`;
+<span class="white">    }</span>
+  <span class="pink">&lt;/script&gt;</span>
+
+  <span class="pink">&lt;script&gt;</span>
+<span class="white">    // コンソール出力の定義(書き換えない)</span>
+<span class="white">    const _stdoutElm = document.getElementById("id_stdout");</span>
+<span class="white">    function _displayConsoleOutput(cssClass, ...args) {</span>
+<span class="white">      const li = document.createElement("li")</span>
+<span class="white">      li.setAttribute("class", cssClass);</span>
+<span class="white">      li.innerText = args[0];</span>
+<span class="white">      _stdoutElm.appendChild(li);</span>
+<span class="white">      _stdoutElm.parentElement.scrollTop = _stdoutElm.parentElement.scrollHeight;</span>
+<span class="white">    }</span>
+<span class="white">    const _console_log = console.log;</span>
+    console.log = (...args) =&gt;</span> {
+<span class="white">      _console_log(...args);</span>
+<span class="white">      _displayConsoleOutput("log", ...args);</span>
+<span class="white">    };</span>
+<span class="white">    const _console_warn = console.warn;</span>
+    console.warn = (...args) =&gt;</span> {
+<span class="white">      _console_warn(args);</span>
+<span class="white">      _displayConsoleOutput("warn", ...args);</span>
+<span class="white">    };</span>
+<span class="white">    const _console_error = console.error;</span>
+    console.error = (...args) =&gt;</span> {
+<span class="white">      _console_error(...args);</span>
+<span class="white">      _displayConsoleOutput("error", ...args);</span>
+<span class="white">    }</span>
+<span class="white">    const _console_exception = console.exception;</span>
+<span class="white">    if (_console_exception) {</span>
+      console.exception = (...args) =&gt;</span> {
+<span class="white">        _console_exception(...args);</span>
+<span class="white">        _displayConsoleOutput("error", ...args);</span>
+<span class="white">      }</span>
+<span class="white">    } else {</span>
+      console.exception = (...args) =&gt;</span> console.error(...args);
+<span class="white">    }</span>
+  <span class="white">&lt;/script&gt;</span>
+
+  <span class="pink">&lt;!-- CSS部分 --&gt;</span>
+  <span class="pink">&lt;style&gt;</span>
+<span class="white">    .ul_nodot {</span>
+<span class="white">      list-style-type: none;</span>
+<span class="white">    }</span>
+
+<span class="white">    .scroll_vertical {</span>
+<span class="white">      font-size: 0.75em;</span>
+<span class="white">      min-height: 8em;</span>
+<span class="white">      max-height: 20em;</span>
+<span class="white">      overflow: scroll;</span>
+<span class="white">      overflow-x: hidden;</span>
+<span class="white">      border-radius: 8px;</span>
+<span class="white">      background-color: black;</span>
+<span class="white">    }</span>
+
+<span class="white">    .ul_console {</span>
+<span class="white">      list-style-type: none;</span>
+<span class="white">      color: yellowgreen;</span>
+<span class="white">      padding-inline-start: 8px;</span>
+<span class="white">    }</span>
+
+<span class="white">    .ul_console li {</span>
+<span class="white">      border-bottom: 1px solid midnightblue;</span>
+<span class="white">    }</span>
+
+<span class="white">    .ul_console li.warn {</span>
+<span class="white">      background-color: rgb(88, 64, 0);</span>
+<span class="white">    }</span>
+
+<span class="white">    .ul_console li.error {</span>
+<span class="white">      background-color: darkred;</span>
+<span class="white">    }</span>
+  <span class="pink">&lt;/style&gt;</span>
+
+<span class="pink">&lt;/body&gt;</span>
+
+<span class="pink">&lt;/html&gt;</span>  
 </code>
               </pre>
             </div>
+            <p>新しく作成したHTMLファイルを開き、以下のページが表示されるか確認してください。</p>
+            <!-- 画像 -->
+            <img src="../img\posts-aws_handson1_2.png" alt="" />
+            <!-- /画像 -->
+            <p>
+              現状では、「Lambda関数を呼ぶ」と「ジョブIDとユーザ名をリセット」というボタンを押しても、「ジョブID → ???」と「ユーザ名 → ???」の文字は変わらないはずです。<br>
+              <strong>この「???」の部分を任意のものに表示させることがこのハンズオンのゴールです！</strong>
+            </p>
           </section>
           <!-- /概要 -->
 
           <!-- 使用方法 -->
           <section id="toc2">
-            <h3>使用方法</h3>
+            <h3>Lambda関数を作成しよう</h3>
             <figure class="img-right">
               <img src="../img/hacku_2020_index.png">
             </figure>
@@ -141,7 +284,7 @@
           
           <!-- 開発環境 -->
           <section id="toc3">
-            <h3>主な開発環境</h3>
+            <h3>APIを作成しよう</h3>
             <p>以下を使用しました。</p>
             <li>フロントエンド: JavaScript, Bootstrap</li>
             <li>バックエンド: Firebase</li>
@@ -151,7 +294,7 @@
 
           <!-- 発展性 -->
           <section id="toc4">
-            <h3>発展性</h3>
+            <h3>Webページで実行確認してみよう</h3>
             <li><strong>コミュニティ機能</strong></li>
             <p>→(フォロー&フォロワー, いいね, シェア, ノート共有)機能 etc…</p>
 

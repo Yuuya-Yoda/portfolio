@@ -136,6 +136,7 @@ h3 {
   letter-spacing: .05em;
   color: #333;
 }
+
 .gnav-item a:after {
   position: absolute;
   bottom: 0;
@@ -612,6 +613,7 @@ Posts
   border-style: none;
   text-align: center;
   margin-bottom: 30px;
+  border: 1px solid #e6e6e6;
 }
 
 .article-body .sns-box p {
@@ -711,7 +713,7 @@ pre {
   text-align: left;
 }
 
-.code-block .cp {
+.code-block .white {
   color: #979797;
 }
 
