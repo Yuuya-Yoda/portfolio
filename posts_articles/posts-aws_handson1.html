@@ -10,13 +10,13 @@
   <meta property="og:image" content="img/ogp.png">
   <meta name="description" content="YUYA YODAのポートフォリオサイトです" />
   <meta charset="UTF-8">
-  <title>HTML内でLambda関数を呼び、表示を反映させよう！</title>
+  <title>AWS Lambda, API Gatewayを使ってサーバレスなWebページを作ってみよう</title>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
   <link href="../css/ress.css" media="all" rel="stylesheet" type="text/css" />
   <link href="../css/style.css" media="all" rel="stylesheet" type="text/css" />
-  <link rel="shortcut icon" href="../img/favicon.ico" />
+  <link rel="shortcut icon" href="../img/YPP_logo.png" />
   <link rel=”canonical” href=”URLが入る” />
 </head>
 
@@ -84,12 +84,14 @@
           <img src="../img\posts-aws_handson1_1.jpg" alt="" />
           <!-- /画像 -->
           <!-- サブタイトル -->
-          <p>
-            HTML内でLambda関数を呼び、表示を反映させよう！
-            <br>Lambdaを使うために新しい言語の勉強は不要なのですぐに簡単に
-            使い始めることができます。
-            <br>また、サーバの構築や管理が不要なので開発に注力することができます。
-          </p>
+          <section>
+            <p>
+              HTML内でLambda関数を呼び、表示を反映させよう！
+              <br>Lambdaを使うために新しい言語の勉強は不要なのですぐに簡単に
+              使い始めることができます。
+              <br>また、サーバの構築や管理が不要なので開発に注力することができます。
+            </p>
+          </section>
           <!-- /サブタイトル -->
           
           <!-- 目次 -->
@@ -108,9 +110,10 @@
           <!-- 概要 -->
           <section id="toc1">
             <h3>事前準備</h3>
-            <p>まず、以下のHTMLファイルを任意のディレクトリに作成してください。</p>
-            <div class="code-block">
-              <pre>
+            <ol>
+              <li>まず、以下のHTMLファイルを任意のディレクトリに作成してください。</li>
+              <div class="code-block">
+                <pre>
 <code>
 <span class="white">&lt;!DOCTYPE html&gt;</span>
 <span class="pink">&lt;html&gt;</span>
@@ -253,16 +256,17 @@
 
 <span class="pink">&lt;/html&gt;</span>  
 </code>
-              </pre>
-            </div>
-            <p>新しく作成したHTMLファイルを開き、以下のページが表示されるか確認してください。</p>
-            <!-- 画像 -->
-            <img src="../img\posts-aws_handson1_2.png" alt="" />
-            <!-- /画像 -->
-            <p>
-              現状では、「Lambda関数を呼ぶ」と「ジョブIDとユーザ名をリセット」というボタンを押しても、「ジョブID → ???」と「ユーザ名 → ???」の文字は変わらないはずです。<br>
-              <strong>この「???」の部分を任意のものに表示させることがこのハンズオンのゴールです！</strong>
-            </p>
+                </pre>
+              </div>
+              <li>新しく作成したHTMLファイルを開き、以下のページが表示されるか確認してください。</li>
+              <!-- 画像 -->
+              <img src="../img\posts-aws_handson1_2.png" alt="" />
+              <!-- /画像 -->
+              <p>
+                ・現状では、「Lambda関数を呼ぶ」と「ジョブIDとユーザ名をリセット」というボタンを押しても、「ジョブID → ???」と「ユーザ名 → ???」の文字は変わらないはずです。<br>
+                ・<strong>この「???」の部分を任意のものに表示させることがこのハンズオンのゴールです！</strong>
+              </p>
+            </ol>
           </section>
           <!-- /概要 -->
 

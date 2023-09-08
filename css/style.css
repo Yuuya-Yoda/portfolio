@@ -51,9 +51,9 @@ h3 {
 }
 
 .container {
-  max-width: 1340px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 20px;
 }
 
 /*--------------------------------
@@ -101,7 +101,7 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 40px;
+  padding: 20px;
 }
 
 .header-logo {
@@ -158,7 +158,7 @@ h3 {
  ハンバーガーメニュー
 ---------------------------------*/
 /* ハンバーガーアイコンのスタイル */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .menu-icon {
     display: block;
     cursor: pointer;
@@ -220,6 +220,8 @@ h3 {
     color: #333;
     font-weight: bold;
     font-size: 18px;
+    margin-top: 3px;
+    margin-bottom: 3px;
   }
 }
 
@@ -575,7 +577,7 @@ Posts
   max-width: 800px;
   margin: 0 auto;
   margin-bottom: 80px;
-  padding: 25px;
+  padding: 20px;
 }
 
 .article-body h3 {
@@ -603,7 +605,7 @@ Posts
 .article-body p {
   font-size: 15px;
   line-height: 1.8;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
 }
 
 .article-body img {
@@ -651,6 +653,19 @@ Posts
 .article-body .toc-area p {
   font-weight: bold;
   text-align: center;
+}
+
+.article-body section {
+  margin-bottom: 30px;
+}
+
+.article-body li {
+  margin-left: 30px;
+  font-size: 15px;
+}
+
+.article-body ol {
+  font-size: 15px;
 }
 
 /*--------------------------------
@@ -719,7 +734,7 @@ pre {
 
 /*media Queries 767
 ----------------------------------------------------*/
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 800px) {
   body {
     font-size: 14px;
   }
@@ -759,7 +774,7 @@ pre {
 
   /* ヘッダー */
   .header .container {
-    padding: 15px;
+    padding: 20px;
   }
 
   .header-logo {
@@ -905,5 +920,9 @@ pre {
     font-size: 14px;
     line-height: 1.7;
     margin-bottom: 20px;
+  }
+
+  .article-body ol {
+    font-size: 12px;
   }
 }
