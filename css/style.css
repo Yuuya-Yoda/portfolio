@@ -605,7 +605,7 @@ Posts
 .article-body p {
   font-size: 15px;
   line-height: 1.8;
-  margin-bottom: 0px;
+  margin-bottom: 20px;
 }
 
 .article-body img {
@@ -660,11 +660,16 @@ Posts
 }
 
 .article-body li {
-  margin-left: 30px;
-  font-size: 15px;
+  margin-left: 20px;
+  font-size: 17px;
 }
 
 .article-body ol {
+  font-size: 15px;
+}
+
+.toc-area ol li {
+  margin-left: 20px;
   font-size: 15px;
 }
 
@@ -924,5 +929,10 @@ pre {
 
   .article-body ol {
     font-size: 12px;
+  }
+
+  .article-body li {
+    margin-left: 20px;
+    font-size: 15px;
   }
 }

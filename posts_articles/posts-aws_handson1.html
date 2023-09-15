@@ -3,15 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-  <meta property='og:type' content='website'>
-  <meta property='og:title' content='WebデザイナーYUYA YODA ポートフォリオ'>
-  <meta property='og:url' content='URLが入る'>
-  <meta property='og:description' content='YUYA YODAのポートフォリオサイトです。'>
-  <meta property="og:image" content="img/ogp.png">
   <meta name="description" content="YUYA YODAのポートフォリオサイトです" />
-  <meta charset="UTF-8">
   <title>AWS Lambda, API Gatewayを使ってサーバレスなWebページを作ってみよう</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
   <link href="../css/ress.css" media="all" rel="stylesheet" type="text/css" />
@@ -119,13 +112,13 @@
 <span class="pink">&lt;html&gt;</span>
 
 <span class="pink">&lt;body&gt;</span>
-  <span class="pink">&lt;h1&gt;</span>ハンズオン<span class="pink">&lt;/h1&gt;</span>
+  <span class="pink">&lt;h1&gt;</span><span class="white">ハンズオン</span><span class="pink">&lt;/h1&gt;</span>
   <span class="pink">&lt;p&gt;</span>
     <span class="white">&lt;!-- "ul_nodot"とは下の<span class="white">&lt;style&gt;</span>の所で定義しており、段落の点を消す設定にしている。 --&gt;</span>
     <span class="white">&lt;ul class="ul_nodot"&gt;</span>
       <span class="pink">&lt;li&gt;</span><span class="white">&lt;input id="hands_on_button" type="button" value="Lambda関数を呼ぶ" onclick="get_id_name()"&gt;</span><span class="pink">&lt;/li&gt;</span>
-      <span class="white">&lt;li id="hands_on_1"&gt;</span>ジョブID → ???<span class="white">&lt;/li&gt;</span>
-      <span class="white">&lt;li id="hands_on_2"&gt;</span>ユーザ名 → ???<span class="white">&lt;/li&gt;</span>
+      <span class="white">&lt;li id="hands_on_1"&gt;</span><span class="white">ジョブID → ???</span><span class="white">&lt;/li&gt;</span>
+      <span class="white">&lt;li id="hands_on_2"&gt;</span><span class="white">ユーザ名 → ???</span><span class="white">&lt;/li&gt;</span>
       <span class="pink">&lt;br&gt;</span>
       <span class="pink">&lt;li&gt;</span><span class="white">&lt;input id="hands_on_button_2" type="button" value="ジョブIDとユーザ名をリセット" onclick="reset_id_name()"&gt;</span><span class="pink">&lt;/li&gt;</span>
     <span class="pink">&lt;/ul&gt;</span>
@@ -134,7 +127,7 @@
   <span class="pink">&lt;p&gt;</span>
     <span class="pink">&lt;br&gt;</span>
 <span class="white">    コンソール出力</span>
-    <span class="pink">&lt;small&gt;</span>※「CTRL+SHIFT+c」を押して、Consoleから見ることも出来ます。<span class="pink">&lt;/small&gt;</span>
+    <span class="pink">&lt;small&gt;</span><span class="white">※「CTRL+SHIFT+c」を押して、Consoleから見ることも出来ます。</span><span class="pink">&lt;/small&gt;</span>
     <span class="pink">&lt;br&gt;</span>
     <span class="white">&lt;div class="scroll_vertical"&gt;</span>
       <span class="white">&lt;ul id="id_stdout" class="ul_console"&gt;</span><span class="white">&lt;/ul&gt;</span>
@@ -158,7 +151,7 @@
 <span class="white">        headers: { "Content-Type": "application/json" },</span>
 <span class="white">        method: "POST",               // メソッドタイプ (ほぼ"POST"しか使わない)</span>
 <span class="white">        body: `{"id": ${ID}, "name": "${NAME}"}`  // Lambda関数に渡すイベントjson</span>
-        })).text().catch((reason) =&gt;</span> {
+<span class="white">        })).text().catch((reason) =&gt; {</span>
 <span class="white">          console.log(`エラー発生 → ${reason}`)</span>
 <span class="white">        });</span>
 
@@ -273,16 +266,21 @@
           <!-- 使用方法 -->
           <section id="toc2">
             <h3>Lambda関数を作成しよう</h3>
-            <figure class="img-right">
-              <img src="../img/hacku_2020_index.png">
-            </figure>
-            <p>
-              最初に「ユーザー名」,「勉強している教科」,「コメント」を入力して
-              タイマーの「Start」ボタンを押します。
-              <br>そうすると右のポップアップに入力した情報が表示されます。
-              これは他のフォロワーに共有されるので、<strong>誰が何の教科を勉強しているかリアルタイムで分かります</strong>。
-              <br>最後に勉強が終わったら「勉強を終了する」ボタンを押します。そうするとそれぞれのユーザーの合計勉強時間が計算され、<strong>Ranking</strong>に反映されます。
-            </p>
+            <ol>
+              <li>基本情報の入力</li>
+              <!-- 画像 -->
+              <img src="../img\posts-aws_handson1_3.png" alt="" />
+              <!-- /画像 -->
+              <p>
+                ・作成方法は「一から作成」を選択<br>
+                ・関数名は「HandsOn_&lt;your name&gt;」にしましょう。(同じ名前の関数は複数作れないので)<br>
+                ・ランタイムはPythonにしましょう。<br>
+                ・アーキテクチャはそのままで大丈夫です。<br>
+                ・アクセス権限の実行ロールは、自分で作成したロールがあれば「既存のロールを使用する」を選びます。<br>
+                → もし自分で作成したロールが無い方はこちらの記事を参考にしてください。
+              </p>
+              <li>ソースコードの記述</li>
+            </ol>
           </section>
           <!-- /使用方法 -->
           
