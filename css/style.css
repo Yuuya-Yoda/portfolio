@@ -209,6 +209,7 @@ h3 {
     justify-content: center;  /* Flexアイテムを縦方向に中央に配置します。 */
     align-items: center;  /* Flexアイテムを横方向に中央に配置します。 */
     height: 100%;  /* メニューが表示されたときに画面全体を覆うようにするため、コンテナの高さを100%に設定します。 */
+    padding: 5px 0px 5px 0px;
   }
 
   .gnav-item {
@@ -779,7 +780,7 @@ pre {
 
   /* ヘッダー */
   .header .container {
-    padding: 20px;
+    padding: 10px 20px 10px 20px;
   }
 
   .header-logo {

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+  <meta name="description" content="YUYA YODAのポートフォリオサイトです" />
+  <title>ステガノグラフィとは？写真に秘密のテキストを隠してみよう！</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+  <link href="../css/ress.css" media="all" rel="stylesheet" type="text/css" />
+  <link href="../css/style.css" media="all" rel="stylesheet" type="text/css" />
+  <link rel="shortcut icon" href="../img/YPP_logo.png" />
+  <link rel=”canonical” href=”URLが入る” />
+</head>
+
+<body>
+  <div class="wrapper">
+
+    <!-- header -->
+    <header class="header ">
+      <div class="container"> 
+        <h1 class="header-logo">
+          <div class="container-logo">
+            <a href="#" class="logo-img">
+                <img src="../img/YPP_logo.png" alt="" />
+            </a>
+            <a href="#">
+              <div class="name">Import Yuya</div>
+            </a>
+          </div>
+        </h1>
+
+        <!-- ハンバーガーメニュー-->
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+        <!-- /ハンバーガーメニュー-->
+
+        <nav class="gnav">
+          <ul class="gnav-list">
+            <li class="gnav-item"><a href="../index.html">HOME</a></li>
+            <li class="gnav-item"><a href="../index.html#about">ABOUT</a></li>
+            <li class="gnav-item"><a href="../works.html">WORKS</a></li>
+            <li class="gnav-item"><a href="../posts.html">POSTS</a></li>
+            <!-- <li class="gnav-item"><a href="#skill">SKILL</a></li> -->
+            <li class="gnav-item"><a href="../index.html#contact">CONTACT</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <!-- /header -->
+
+    <!-- main -->
+    <main class="content">
+
+      <!-- パンくずリスト -->
+      <nav class="bread-crumb">
+        <ul>
+          <li><a href="../index.html">ホーム</a></li>
+          <li><a href="../posts.html">POSTS</a></li>
+          <li><span>ステガノグラフィとは？写真に秘密のテキストを隠してみよう！</span></li>
+        </ul>
+      </nav>
+      <!-- /パンくずリスト -->
+
+      <article class="article">
+        <div class="article-body">
+          <p class="blue-title">プログラミング</p>
+          <h1 class="article-title">ステガノグラフィとは？写真に秘密のテキストを隠してみよう！</h1>
+          <div class="sns-box">
+            <p class="works-date">2024/2/18 更新</p>
+          </div>
+          <!-- 画像 -->
+          <img src="../img/post1-1.jpg" alt="" />
+          <!-- /画像 -->
+          <!-- サブタイトル -->
+          <section>
+            <p>
+              皆さんはステガノグラフィについて知っていますか？簡単に説明すると、あるデータを他のデータに隠す技術のことです。
+              <br>どのように使われているのか一緒に見ていきましょう！
+            </p>
+          </section>
+          <!-- /サブタイトル -->
+          
+          <!-- 目次 -->
+          <div class="toc-area">
+            <p>目次</p>
+            <ol>
+              <li><a href="#toc1">ステガノグラフィとは</a></li>
+              <li><a href="#toc2">自作ツールの紹介</a></li>
+              <li><a href="#toc3">自作ツールの使い方</a></li>
+              <li><a href="#toc4">おわりに</a></li>
+            </ol>
+          </div>
+          <!-- /目次 -->
+
+          <!-- ステガノグラフィとは -->
+          <section id="toc1">
+            <h3>ステガノグラフィとは</h3>
+            <p>
+              <strong>ステガノグラフィ</strong>は、情報を隠す技術の一種であり、デジタル画像、音声、ビデオ、テキストなどのメディアに秘密情報を埋め込むことを可能にします。
+              この技術は、外部からは見えないように情報を伝達したい場合に利用されます。
+              <br><br>例えば、「<strong>電子透かし</strong>」のようなデジタルメディアに情報を埋め込むための手段としても使用されます。これにより、オリジナルのコンテンツの所有者や制作者が特定できるようになります。
+              <br><br>一方で、悪意のあるユーザーがステガノグラフィを使用して<strong>マルウェアを伝播させる</strong>ことがあります。この場合、ステガノグラフィは攻撃の手段として悪用され、セキュリティリスクを高める可能性があります。
+              <br><br>この技術は、デジタル水印や著作権管理、秘密通信、犯罪捜査などの様々な分野で応用されています。しかし、ステガノグラフィは悪用される可能性もあるため、<strong>セキュリティやプライバシーに関する懸念</strong>もあります。
+              ステガノグラフィは、通常の観察者が気づかないように情報を隠すため、その技術の進歩は<strong>監視、セキュリティ、暗号解読の分野でも重要視されています。</strong>
+            </p>
+          </section>
+          <!-- /ステガノグラフィとは -->
+
+          <!-- 自作ツールの紹介 -->
+          <section id="toc2">
+            <h3>自作ツールの紹介</h3>
+            <p>
+              今回は実際に写真の中に指定したテキストを隠したり、隠したテキストを抽出したりすることができるツールを作成しました！
+              <br><br>ぜひ実際にやってみるとステガノグラフィについて理解が深まると思います！
+              下のリンクからどうぞ！
+            </p>
+            <li><a href="./posts-steganography_link1.html">写真にテキストを埋め込むツール</a></li>
+          </section>
+          <!-- /自作ツールの紹介 -->
+
+          <!-- 自作ツールの使い方 -->
+          <section id="toc3">
+            <h3>自作ツールの使い方</h3>
+            <p>
+              この自作ツールは、ステガノグラフィの基本的な概念を理解し、実際に体験することができる<strong>自作ツール</strong>です！
+              <br><br>写真にテキストを埋め込むことで、デジタルメディアに情報を隠すプロセスを直感的に理解することができます。
+              このツールを使用することで、ステガノグラフィがどのように機能し、どのようにメディアに秘密情報を組み込むことができるのかが明確になります。
+              <br><br>また、その逆のプロセスである隠された情報を抽出する方法も学ぶことができます。
+              ステガノグラフィの原理を実際の操作を通じて体験することで、この<strong>技術の重要性や潜在的なリスク</strong>についての理解が深まるでしょう。ぜひこのツールを使って、ステガノグラフィについての知識をより一層深めてみてください！
+            </p>
+          </section>
+          <!-- /自作ツールの使い方 -->
+
+          <!-- おわりに -->
+          <section id="toc3">
+            <h3>おわりに</h3>
+            <p>
+              ステガノグラフィは、<strong>情報の隠蔽と伝達において幅広く応用される技術</strong>です。本ブログでは、ステガノグラフィの基本的な概念から具体的な応用例までを紹介しました。
+              <br><br>また、情報の隠蔽と抽出がどのように行われるのかを理解し、その<strong>重要性や潜在的なリスク</strong>について考えることができたかと思います。
+              <br><br>ステガノグラフィは、セキュリティやプライバシーの面でも重要な技術ですが、悪用される可能性もあるため、<strong>常にその利用には注意が必要</strong>です。今後もステガノグラフィに関する情報を追跡し、その発展と安全な利用に向けて積極的に取り組んでいきましょう。
+              <br><br>本ブログではITに関するテーマを多く取り上げているので、他の記事もぜひご覧ください！
+            </p>
+          </section>
+          <!-- /おわりに -->
+
+          <div class="home-link">
+            <a href="../posts.html">Posts一覧へ</a>
+          </div>
+        </div>
+      </article>
+
+      <div class="page-top" id="js-page-top">
+        <span class="material-icons-outlined">expand_less</span>
+      </div>
+    </main>
+
+    <!-- footer -->
+    <footer class="footer">
+      <div class="copyright">&copy;YUYA YODA</div>
+    </footer>
+    <!-- /footer -->
+
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type='text/javascript' src="../js/script.js"></script>
+</body>
+</html>

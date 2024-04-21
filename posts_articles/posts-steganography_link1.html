@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+  <meta name="description" content="YUYA YODAのポートフォリオサイトです" />
+  <title>ステガノグラフィとは？写真に秘密のテキストを隠してみよう！</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+  <link href="../css/ress.css" media="all" rel="stylesheet" type="text/css" />
+  <link href="../css/style.css" media="all" rel="stylesheet" type="text/css" />
+  <link rel="shortcut icon" href="../img/YPP_logo.png" />
+  <link rel=”canonical” href=”URLが入る” />
+  <style>
+    /* テキストボックスのスタイル */
+    #textInput {
+        width: 100%; /* 幅を300pxに設定 */
+        height: 150px; /* 高さを150pxに設定 */
+        padding: 10px; /* テキストと境界の間に余白を設定 */
+        font-size: 16px; /* フォントサイズを16pxに設定 */
+        border: 2px solid #ccc; /* 境界線のスタイルを設定 */
+        border-radius: 5px; /* 角丸を設定 */
+        background-color: #f8f8f8; /* 背景色を設定 */
+        color: #333; /* テキストの色を設定 */
+        resize: none; /* テキストボックスのリサイズを無効にする */
+    }
+
+    /* ボタンのスタイル */
+    button {
+        width: 100%; /* 幅を100%に設定 */
+        height: 40px; /* 高さを40pxに設定 */
+        margin-top: 10px; /* 上部に余白を設定 */
+        font-size: 16px; /* フォントサイズを16pxに設定 */
+        background-color: #005731; /* ボタンの背景色を設定 */
+        color: #fff; /* テキストの色を設定 */
+        border: none; /* 境界線をなくす */
+        border-radius: 5px; /* 角丸を設定 */
+        cursor: pointer; /* マウスをホバーしたときにポインターを表示 */
+    }
+
+    /* ボタンのホバースタイル */
+    button:hover {
+        background-color: #005735; /* ホバー時の背景色を変更 */
+    }
+
+    /* テキストボックスのスタイル */
+    #fileNameInput {
+        padding: 10px; /* テキストと境界の間に余白を設定 */
+        font-size: 16px; /* フォントサイズを16pxに設定 */
+        border: 2px solid #ccc; /* 境界線のスタイルを設定 */
+        border-radius: 5px; /* 角丸を設定 */
+        background-color: #f8f8f8; /* 背景色を設定 */
+        color: #333; /* テキストの色を設定 */
+        resize: none; /* テキストボックスのリサイズを無効にする */
+        margin-bottom: 30px;
+    }
+
+    /* 抽出されたテキストの枠のスタイル */
+    #extractedText {
+        width: 100%; /* 幅をページの幅に合わせる */
+        height: 150px; /* 高さを150pxに固定 */
+        overflow-y: auto; /* 縦方向のスクロールを有効にする */
+        border: 2px solid #ccc; /* 境界線のスタイルを設定 */
+        border-radius: 5px; /* 角丸を設定 */
+        padding: 10px; /* テキストと境界の間に余白を設定 */
+        background-color: #f0f0f0; /* 背景色を設定 */
+        color: #333; /* テキストの色を設定 */
+    }
+</style>
+</head>
+
+<body>
+  <div class="wrapper">
+
+    <!-- header -->
+    <header class="header ">
+      <div class="container"> 
+        <h1 class="header-logo">
+          <div class="container-logo">
+            <a href="#" class="logo-img">
+                <img src="../img/YPP_logo.png" alt="" />
+            </a>
+            <a href="#">
+              <div class="name">Import Yuya</div>
+            </a>
+          </div>
+        </h1>
+
+        <!-- ハンバーガーメニュー-->
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+        <!-- /ハンバーガーメニュー-->
+
+        <nav class="gnav">
+          <ul class="gnav-list">
+            <li class="gnav-item"><a href="../index.html">HOME</a></li>
+            <li class="gnav-item"><a href="../index.html#about">ABOUT</a></li>
+            <li class="gnav-item"><a href="../works.html">WORKS</a></li>
+            <li class="gnav-item"><a href="../posts.html">POSTS</a></li>
+            <!-- <li class="gnav-item"><a href="#skill">SKILL</a></li> -->
+            <li class="gnav-item"><a href="../index.html#contact">CONTACT</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <!-- /header -->
+
+    <!-- main -->
+    <main class="content">
+
+      <!-- パンくずリスト -->
+      <nav class="bread-crumb">
+        <ul>
+          <li><a href="../index.html">ホーム</a></li>
+          <li><a href="../posts.html">POSTS</a></li>
+          <li><a href="./posts-steganography.html">ステガノグラフィとは？写真に秘密のテキストを隠してみよう！</a></li>
+          <li><span>写真にテキストを隠すツール</span></li>
+        </ul>
+      </nav>
+      <!-- /パンくずリスト -->
+
+      <article class="article">
+        <div class="article-body">
+          <p class="blue-title">プログラミング</p>
+          <h1>写真にテキストを隠すツール</h1>
+          <div class="sns-box">
+            <p class="works-date">2024/2/18 更新</p>
+          </div>
+          <p>
+            <h3>好きな写真を選択してください</h3>
+            <br><input type="file" accept="image/png, image/jpeg" id="imageInput">
+          </p>
+          <p>
+            <h3>隠したいテキストを入力してください</h3>
+            <br><textarea id="textInput" placeholder="テキストを入力してください"></textarea>
+            <button onclick="embedText()">テキストの確定</button>
+          </p>
+          <p>
+            <h3>写真の保存名を入力してください</h3>
+            <input type="text" id="fileNameInput" placeholder="Enter file name"> .png
+            <br><h4>スマホの場合は画像を長押しで保存してください。</h4>
+            <div id="embeddedImage"></div>
+            <button onclick="saveImage()">写真をダウンロード(PC)</button>
+          </p>
+        </div>
+
+        <div class="article-body">
+          <p class="blue-title">プログラミング</p>
+          <h1>写真からテキストを取得するツール</h1>
+          <div class="sns-box">
+            <p class="works-date">2024/2/18 更新</p>
+          </div>
+          <p>
+            <h3>テキストを隠した写真を選択してください</h3>
+            <br><input type="file" accept="image/png, image/jpeg" id="imageInput2">
+          </p>
+          <p>
+            <h3>抽出したテキストを表示</h3>
+            <div id="extractedText"></div>
+          </p>
+
+          <div class="home-link">
+            <a href="./posts-steganography.html">元の記事に戻る</a>
+          </div>
+        </div>
+      </article>
+
+      <div class="page-top" id="js-page-top">
+        <span class="material-icons-outlined">expand_less</span>
+      </div>
+    </main>
+
+    <!-- footer -->
+    <footer class="footer">
+      <div class="copyright">&copy;YUYA YODA</div>
+    </footer>
+    <!-- /footer -->
+
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type='text/javascript' src="../js/script.js"></script>
+  <script>
+      var embeddedImageData;
+
+      function embedText() {
+          var imageInput = document.getElementById('imageInput');
+          var textInput = document.getElementById('textInput');
+          var imageFile = imageInput.files[0];
+          var text = textInput.value;
+
+          if (imageFile && text) {
+              var reader = new FileReader();
+              reader.onload = function(e) {
+                  var image = new Image();
+                  image.src = e.target.result;
+                  image.onload = function() {
+                      var canvas = document.createElement('canvas');
+                      var ctx = canvas.getContext('2d');
+                      canvas.width = this.width;
+                      canvas.height = this.height;
+                      ctx.drawImage(this, 0, 0);
+                      var binaryText = textToBits(text);
+                      console.log(binaryText);
+                      binaryText += '1111111111111110'; // 終了シグナルを追加
+                      var pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+                      var pixelIndex = 0;
+                      for (var i = 0; i < pixels.length; i += 4) {
+                          if (pixelIndex < binaryText.length) {
+                              pixels[i] = (pixels[i] & 0xFE) | parseInt(binaryText[pixelIndex++]);
+                          }
+                      }
+                      embeddedImageData = new ImageData(pixels, canvas.width, canvas.height);
+                      ctx.putImageData(embeddedImageData, 0, 0);
+                      var embeddedImage = new Image();
+                      embeddedImage.src = canvas.toDataURL();
+                      document.getElementById('embeddedImage').innerHTML = '';
+                      document.getElementById('embeddedImage').appendChild(embeddedImage);
+                  };
+              };
+              reader.readAsDataURL(imageFile);
+          } else {
+              alert('Please select an image and enter text to embed.');
+          }
+      }
+
+      function saveImage() {
+          var fileNameInput = document.getElementById('fileNameInput');
+          var fileName = fileNameInput.value;
+          if (!fileName) {
+              alert('Please enter a file name.');
+              return;
+          }
+          var canvas = document.createElement('canvas');
+          var ctx = canvas.getContext('2d');
+          canvas.width = embeddedImageData.width;
+          canvas.height = embeddedImageData.height;
+          ctx.putImageData(embeddedImageData, 0, 0);
+          var link = document.createElement('a');
+          link.href = canvas.toDataURL();
+          link.download = fileName + '.png';
+          link.click();
+      }
+
+      function textToBits(text) {
+        const utf8Encoder = new TextEncoder();
+        const bytes = utf8Encoder.encode(text);
+        
+        let bits = '';
+        for (let i = 0; i < bytes.length; i++) {
+          bits += bytes[i].toString(2).padStart(8, '0');
+        }
+        
+        return bits;
+      }
+  </script>
+  <script>
+        document.getElementById('imageInput2').addEventListener('change', function() {
+            var file = this.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var image = new Image();
+                    image.src = e.target.result;
+                    image.onload = function() {
+                        var canvas = document.createElement('canvas');
+                        var ctx = canvas.getContext('2d');
+                        canvas.width = this.width;
+                        canvas.height = this.height;
+                        ctx.drawImage(this, 0, 0);
+                        var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                        var pixels = imageData.data;
+                        var binaryText = '';
+                        for (var i = 0; i < pixels.length; i += 4) {
+                            binaryText += (pixels[i] & 1);
+                        }
+                        var endIndex = binaryText.indexOf('1111111111111110');
+                        binaryText = binaryText.substring(0, endIndex);
+                        var extractedText = '';
+                        for (var j = 0; j < binaryText.length; j += 8) {
+                            extractedText += String.fromCharCode(parseInt(binaryText.substring(j, j + 8), 2));
+                        }
+                        var decodedText = decodeURIComponent(escape(extractedText));
+                        document.getElementById('extractedText').innerText = decodedText;
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

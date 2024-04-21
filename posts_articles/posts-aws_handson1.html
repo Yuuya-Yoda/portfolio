@@ -25,7 +25,7 @@
                 <img src="../img/YPP_logo.png" alt="" />
             </a>
             <a href="#">
-              <div class="name">Yuya Yoda</div>
+              <div class="name">Import Yuya</div>
             </a>
           </div>
         </h1>
@@ -280,6 +280,23 @@
                 → もし自分で作成したロールが無い方はこちらの記事を参考にしてください。
               </p>
               <li>ソースコードの記述</li>
+              <div class="code-block">
+                <pre>
+<code>
+<span class="white">
+import json
+
+def lambda_handler(event, context):
+    # TODO implement
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Hello from Lambda!')
+    }
+</span>
+</code>
+                </pre>
+              </div>
+              <p>関数を作成すると以上のようなテストコードが確認できます。以上のコードを修正し、以下のコードに書き換えましょう。</p>
             </ol>
           </section>
           <!-- /使用方法 -->
