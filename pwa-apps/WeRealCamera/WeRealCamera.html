@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Yuyaのポートフォリオ兼ブログページです。" />
+  <title>Import Yuya</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+  <link rel="shortcut icon" href="img/YPP_logo.png" />
+  <link rel=”canonical” href=”https://www.~/” />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <style>
+    h1 {
+      margin-top: 5px;
+      margin-bottom: 5px;
+      text-align: center;
+    }
+
+    #container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      height: calc(125% * width);
+      margin: auto;
+    }
+    #outerVideo {
+      width: 100%;
+      height: calc(125% * width);
+    }
+    #innerVideo {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 100px;
+      border: 2px solid white;
+    }
+    #photoContainer {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      height: calc(125% * width);
+      margin: 20px auto;
+    }
+    #outerPhoto {
+      width: 100%;
+      height: calc(125% * width);
+    }
+    #innerPhoto {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 100px;
+      border: 2px solid white;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>WeRealCamera</h1>
+  <div id="container">
+    <video id="outerVideo" autoplay></video>
+    <video id="innerVideo" autoplay muted></video>
+  </div>
+  <button id="captureButton">写真を撮る</button>
+  <div id="photoContainer">
+    <canvas id="outerPhoto"></canvas>
+    <canvas id="innerPhoto"></canvas>
+  </div>
+
+  <script>
+    const outerVideo = document.getElementById('outerVideo');
+    const innerVideo = document.getElementById('innerVideo');
+    const captureButton = document.getElementById('captureButton');
+    const outerPhoto = document.getElementById('outerPhoto');
+    const innerPhoto = document.getElementById('innerPhoto');
+    let outerStream;
+    let innerStream;
+
+    async function startCameras() {
+      try {
+        outerStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        outerVideo.srcObject = outerStream;
+      } catch (error) {
+        console.error('バックカメラのアクセスに失敗しました:', error);
+      }
+
+      try {
+        innerStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+        innerVideo.srcObject = innerStream;
+      } catch (error) {
+        console.error('フロントカメラのアクセスに失敗しました:', error);
+      }
+    }
+
+    captureButton.addEventListener('click', () => {
+      capturePhoto();
+    });
+
+    function capturePhoto() {
+      const outerContext = outerPhoto.getContext('2d');
+      const innerContext = innerPhoto.getContext('2d');
+
+      // 外カメラの写真を撮影
+      outerPhoto.width = outerVideo.videoWidth;
+      outerPhoto.height = outerVideo.videoHeight;
+      outerContext.drawImage(outerVideo, 0, 0, outerPhoto.width, outerPhoto.height);
+
+      // 内カメラの写真を撮影
+      innerPhoto.width = innerVideo.videoWidth;
+      innerPhoto.height = innerVideo.videoHeight;
+      innerContext.drawImage(innerVideo, 0, 0, innerPhoto.width, innerPhoto.height);
+    }
+
+    // カメラを起動
+    startCameras();
+
+  </script>
+
+
+  <script>
+    window.addEventListener('load', () => {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register('../../js/sw.js')
+          .then(registration => console.log('registered', registration))
+          .catch(error => console.log('error', error));
+      }
+    });
+  </script>
+
+</body>
+</html>
