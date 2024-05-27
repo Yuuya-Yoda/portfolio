@@ -11,6 +11,7 @@
   <link href="css/style.css" media="all" rel="stylesheet" type="text/css" />
   <link rel="shortcut icon" href="img/YPP_logo.png" />
   <link rel=”canonical” href=”https://www.~/” />
+  <link rel="manifest" href="manifest.webmanifest" />
 </head>
 
 <body>
@@ -108,7 +109,7 @@
               <div class="works-img"><img src="img/works-dummy-thumb.jpg" alt="" /></div>
               <p class="works-name">Sensing Solution アイデアソン・ハッカソン2022</p>
             </a>
-            <a class="works-item" href="works_articles/works-hacku2020.html">
+            <a class="works-item" href="pwa-apps/WeRealCamera/WeRealCamera.html">
               <p class="works-date">2024/5/27</p>
               <div class="works-img"><img src="img/works-dummy-thumb.jpg" alt="" /></div>
               <p class="works-name">PWAを用いたWebアプリケーション</p>
@@ -242,6 +243,16 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script type='text/javascript' src="js/script.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register('js/sw.js')
+          .then(registration => console.log('registered', registration))
+          .catch(error => console.log('error', error));
+      }
+    });
+  </script>
 
 </body>
 </html>

@@ -7,9 +7,8 @@
   <title>Import Yuya</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
-  <link rel="shortcut icon" href="img/YPP_logo.png" />
+  <link rel="shortcut icon" href="../../img/YPP_logo.png" />
   <link rel=”canonical” href=”https://www.~/” />
-  <link rel="manifest" href="manifest.webmanifest" />
   <style>
     h1 {
       margin-top: 5px;
@@ -21,12 +20,20 @@
       position: relative;
       width: 100%;
       max-width: 600px;
-      height: calc(125% * width);
       margin: auto;
     }
-    #outerVideo {
+    .aspect-ratio-box {
       width: 100%;
-      height: calc(125% * width);
+      position: relative;
+      padding-top: 133.33%; /* 3:4の縦横比 */
+    }
+    .aspect-ratio-box video,
+    .aspect-ratio-box canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
     #innerVideo {
       position: absolute;
@@ -39,12 +46,7 @@
       position: relative;
       width: 100%;
       max-width: 600px;
-      height: calc(125% * width);
       margin: 20px auto;
-    }
-    #outerPhoto {
-      width: 100%;
-      height: calc(125% * width);
     }
     #innerPhoto {
       position: absolute;
@@ -53,18 +55,33 @@
       width: 100px;
       border: 2px solid white;
     }
+    #message {
+      margin: 20px auto;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f8f8f8;
+      width: calc(100% - 40px);
+      max-width: 600px;
+      text-align: center;
+    }
   </style>
 </head>
 
 <body>
   <h1>WeRealCamera</h1>
+
+  <div id="message">カメラのアクセス状況: 確認中...</div>
   <div id="container">
-    <video id="outerVideo" autoplay></video>
+    <div class="aspect-ratio-box">
+      <video id="outerVideo" autoplay></video>
+    </div>
     <video id="innerVideo" autoplay muted></video>
   </div>
   <button id="captureButton">写真を撮る</button>
   <div id="photoContainer">
-    <canvas id="outerPhoto"></canvas>
+    <div class="aspect-ratio-box">
+      <canvas id="outerPhoto"></canvas>
+    </div>
     <canvas id="innerPhoto"></canvas>
   </div>
 
@@ -74,13 +91,18 @@
     const captureButton = document.getElementById('captureButton');
     const outerPhoto = document.getElementById('outerPhoto');
     const innerPhoto = document.getElementById('innerPhoto');
+    const messageElement = document.getElementById('message');
     let outerStream;
     let innerStream;
 
     async function startCameras() {
+      let outerSuccess = false;
+      let innerSuccess = false;
+
       try {
         outerStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
         outerVideo.srcObject = outerStream;
+        outerSuccess = true;
       } catch (error) {
         console.error('バックカメラのアクセスに失敗しました:', error);
       }
@@ -88,8 +110,19 @@
       try {
         innerStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
         innerVideo.srcObject = innerStream;
+        innerSuccess = true;
       } catch (error) {
         console.error('フロントカメラのアクセスに失敗しました:', error);
+      }
+
+      if (outerSuccess && innerSuccess) {
+        messageElement.textContent = 'カメラのアクセスに成功しました。';
+      } else if (outerSuccess) {
+        messageElement.textContent = 'バックカメラのアクセスに成功しましたが、フロントカメラのアクセスに失敗しました。';
+      } else if (innerSuccess) {
+        messageElement.textContent = 'フロントカメラのアクセスに成功しましたが、バックカメラのアクセスに失敗しました。';
+      } else {
+        messageElement.textContent = 'カメラのアクセスに失敗しました。';
       }
     }
 
@@ -101,12 +134,28 @@
       const outerContext = outerPhoto.getContext('2d');
       const innerContext = innerPhoto.getContext('2d');
 
-      // 外カメラの写真を撮影
-      outerPhoto.width = outerVideo.videoWidth;
-      outerPhoto.height = outerVideo.videoHeight;
-      outerContext.drawImage(outerVideo, 0, 0, outerPhoto.width, outerPhoto.height);
+      // 外カメラの写真を3:4に切り取る
+      const outerWidth = outerVideo.videoWidth;
+      const outerHeight = outerVideo.videoHeight;
+      const outerAspect = 3 / 4;
+      
+      let newOuterWidth, newOuterHeight;
+      if (outerWidth / outerHeight > outerAspect) {
+        newOuterHeight = outerHeight;
+        newOuterWidth = outerHeight * outerAspect;
+      } else {
+        newOuterWidth = outerWidth;
+        newOuterHeight = outerWidth / outerAspect;
+      }
 
-      // 内カメラの写真を撮影
+      const outerXOffset = (outerWidth - newOuterWidth) / 2;
+      const outerYOffset = (outerHeight - newOuterHeight) / 2;
+
+      outerPhoto.width = newOuterWidth;
+      outerPhoto.height = newOuterHeight;
+      outerContext.drawImage(outerVideo, outerXOffset, outerYOffset, newOuterWidth, newOuterHeight, 0, 0, newOuterWidth, newOuterHeight);
+
+      // 内カメラの写真をそのまま使用（例として、縦横比は気にしない）
       innerPhoto.width = innerVideo.videoWidth;
       innerPhoto.height = innerVideo.videoHeight;
       innerContext.drawImage(innerVideo, 0, 0, innerPhoto.width, innerPhoto.height);
@@ -114,20 +163,6 @@
 
     // カメラを起動
     startCameras();
-
   </script>
-
-
-  <script>
-    window.addEventListener('load', () => {
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-          .register('../../js/sw.js')
-          .then(registration => console.log('registered', registration))
-          .catch(error => console.log('error', error));
-      }
-    });
-  </script>
-
 </body>
 </html>
