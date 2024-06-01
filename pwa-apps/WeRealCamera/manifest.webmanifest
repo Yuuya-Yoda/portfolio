@@ -3,8 +3,9 @@
   "short_name": "WeRealCamera",
   "start_url": "WeRealCamera.html",
   "display": "standalone",
-  "background_color": "#4E526F",
-  "theme_color": "#4E526F",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "../../img/icons-192.png",
