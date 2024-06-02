@@ -11,6 +11,16 @@
   <link rel="canonical" href="https://www.~/"/>
   <link rel="manifest" href="manifest.webmanifest" />
   <style>
+    .container {
+      max-width: 400px;
+      margin-left: calc((100% - 400px)/2); /* 画面幅が400pxを超える場合の値 */
+    }
+    @media (max-width: 400px) {
+      .container {
+        margin-left: 0px;
+      }
+    }
+
     h2 {
       font-style: bold;
       text-align: center;
@@ -27,36 +37,100 @@
 
     .camera {
       padding: 5px;
+      text-align: center;
     }
 
     #video {
+      max-width: 400px; /* 横の最大値を400pxに制限 */
       width: 100%;
       height: calc(100% * 0.75); /* 4:3のアスペクト比 */
       border-radius: 5%;
+      display: block;
     } /* memo: transform: scaleX(-1); インカメラの場合に左右反転 */
 
     #captureButton {
+      max-width: 80px;
+      max-height: 80px;
       width: 20vw;
       height: calc(20vw);
       background-color: black;
       border: 5px solid white;
       border-radius: 50%;
-      margin-left: calc(50% - 10vw);
+      display: block;
+      margin-left: calc(50% - 40px); /* 画面幅が400pxを超える場合の値 */
+    }
+
+    @media (max-width: 400px) {
+      #captureButton {
+        display: block;
+        margin-left: calc(50% - 10vw);
+      }
+    }
+
+    .options {
+      margin-top: 10px;
+    }
+
+    #capturedImage1 {
+      max-width: 100%;
+      height: auto;
+      display: none; /* 最初は非表示 */
+    }
+
+    #capturedImage2 {
+      max-width: 100%;
+      height: auto;
+      display: none; /* 最初は非表示 */
+    }
+
+    .relative {
+      position: relative;
+      max-width: 400px;
+      padding: 5px;
+    }
+
+    .absolute {
+      position: absolute;
+      width: 28%;
+      top: 20px;
+      left: 20px;
+      border: 2px solid black;
+      border-radius: 10%;
+    }
+
+    .downloadButton {
+      display: none;
+      max-width: 166px;
+      max-height: 52px;
+      cursor: pointer;
+      padding: 5px;
+      margin-left: calc(50% - 83px); /* 画面幅が400pxを超える場合の値 */
     }
   </style>
 </head>
 
 <body>
-  <h2>WeRealCamera</h2>
-  <div class="camera">
-    <video id="video" autoplay muted playsinline></video>
-  </div>
-  <div>
-    <button id="captureButton"></button>
+  <div class="container">
+    <h2>WeRealCamera</h2>
+    <div class="camera">
+      <video id="video" autoplay muted playsinline></video>
+    </div>
+
+    <div class="options">
+      <button id="captureButton"></button>
+    </div>
+
+    <div class="relative">
+      <img id="capturedImage2">
+      <img id="capturedImage1" class="absolute">
+    </div>
+
+    <img id="downloadButton" src="../../img/WeRealCamera-downloadButton.PNG" class="downloadButton" alt="Download">
   </div>
   
   <script>
     let localStream;
+    let isFrontCamera = true;
 
     const constraints = {
         video: {
@@ -69,7 +143,6 @@
     };
 
     const getStream = (facingMode) => {
-        // 直前のストリームを停止する
         if (localStream !== undefined) {
             localStream.getVideoTracks().forEach((camera) => {
                 camera.stop();
@@ -77,7 +150,6 @@
             });
         }
 
-        // 新しいカメラのストリームを設定
         constraints.video.facingMode = facingMode;
 
         navigator.mediaDevices.getUserMedia(constraints)
@@ -87,7 +159,6 @@
                 video.srcObject = stream;
                 video.play();
 
-                // インカメラの場合に反転する
                 if (facingMode === 'user') {
                     video.style.transform = "scaleX(-1)";
                     isFrontCamera = true;
@@ -100,31 +171,120 @@
             });
     }
 
-    // 初期状態でインカメラを取得 → environment: 外カメラ, user: インカメラ
     getStream('user');
 
-    // 撮影ボタンのイベントリスナーを設定
     document.getElementById('captureButton').addEventListener('click', () => {
-        // 1秒後に外カメラに切り替える
-        setTimeout(() => {
+        const video = document.getElementById('video');
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageDataURL = canvas.toDataURL('image/png');
+
+        if (isFrontCamera) {
+          console.log("Image1")
+          const capturedImage1 = document.getElementById('capturedImage1');
+          capturedImage1.src = imageDataURL;
+          capturedImage1.style.display = 'block';
+        } else {
+          console.log("Image2")
+          const capturedImage2 = document.getElementById('capturedImage2');
+          capturedImage2.src = imageDataURL;
+          capturedImage2.style.display = 'block';
+        }
+
+        if (isFrontCamera) {
             getStream('environment');
-        }, 1000);
+        }
     });
+
+    document.getElementById('downloadButton').addEventListener('click', () => {
+        const canvas = document.createElement('canvas');
+        const capturedImage1 = document.getElementById('capturedImage2');
+        const capturedImage2 = document.getElementById('capturedImage1');
+        
+        const img1 = new Image();
+        const img2 = new Image();
+        img1.src = capturedImage1.src;
+        img2.src = capturedImage2.src;
+
+        img1.onload = () => {
+            canvas.width = img1.width;
+            canvas.height = img1.height;
+            const context = canvas.getContext('2d');
+            context.drawImage(img1, 0, 0);
+
+            // Draw rounded rectangle and clip for img2
+            const scale = 0.28; // Scale for the second image
+            const width = img2.width * scale;
+            const height = img2.height * scale;
+            const x = 40; // Position of the second image
+            const y = 40;
+            const borderRadius = 0.1 * width; // 10% border radius
+
+            context.save();
+            context.beginPath();
+            context.moveTo(x + borderRadius, y);
+            context.lineTo(x + width - borderRadius, y);
+            context.quadraticCurveTo(x + width, y, x + width, y + borderRadius);
+            context.lineTo(x + width, y + height - borderRadius);
+            context.quadraticCurveTo(x + width, y + height, x + width - borderRadius, y + height);
+            context.lineTo(x + borderRadius, y + height);
+            context.quadraticCurveTo(x, y + height, x, y + height - borderRadius);
+            context.lineTo(x, y + borderRadius);
+            context.quadraticCurveTo(x, y, x + borderRadius, y);
+            context.closePath();
+            context.clip();
+
+            context.drawImage(img2, x, y, width, height);
+            context.restore();
+
+            // Draw black border
+            context.beginPath();
+            context.moveTo(x + borderRadius, y);
+            context.lineTo(x + width - borderRadius, y);
+            context.quadraticCurveTo(x + width, y, x + width, y + borderRadius);
+            context.lineTo(x + width, y + height - borderRadius);
+            context.quadraticCurveTo(x + width, y + height, x + width - borderRadius, y + height);
+            context.lineTo(x + borderRadius, y + height);
+            context.quadraticCurveTo(x, y + height, x, y + height - borderRadius);
+            context.lineTo(x, y + borderRadius);
+            context.quadraticCurveTo(x, y, x + borderRadius, y);
+            context.closePath();
+            context.lineWidth = 4;
+            context.strokeStyle = 'black';
+            context.stroke();
+
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'merged_image.png';
+                document.body.appendChild(link); // Add to the DOM
+                link.click();
+                document.body.removeChild(link); // Remove after clicking
+                URL.revokeObjectURL(url); // Free up memory
+            }, 'image/png');
+        };
+    });
+
+    const observer = new MutationObserver(() => {
+      const capturedImage1 = document.getElementById('capturedImage1');
+      const capturedImage2 = document.getElementById('capturedImage2');
+      const downloadButton = document.getElementById('downloadButton');
+      const video = document.getElementById('video');
+      const captureButton = document.getElementById('captureButton')
+      if (capturedImage1.style.display === 'block' && capturedImage2.style.display === 'block') {
+        video.style.display = 'none';  // カメラ画面を隠す
+        captureButton.style.display = 'none';  // ボタンを隠す
+        downloadButton.style.display = 'block';  // ダウンロードボタンを出現
+      }
+    });
+
+    observer.observe(document.getElementById('capturedImage1'), { attributes: true });
+    observer.observe(document.getElementById('capturedImage2'), { attributes: true });
+
   </script>
-<!--
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(registration => {
-            console.log('Service Worker registered with scope:', registration.scope);
-          })
-          .catch(error => {
-            console.error('Service Worker registration failed:', error);
-          });
-      });
-    }
-  </script>
--->
 </body>
 </html>
