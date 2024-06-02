@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Yuyaのポートフォリオ兼ブログページです。" />
+    <title>Import Yuya</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+    <style>
+        /* ボタンのスタイル */
+        button {
+            width: 100%; /* 幅を100%に設定 */
+            height: 3vh; /* 高さを全体の20%に設定 */
+            margin-top: 10px; /* 上部に余白を設定 */
+            font-size: 16px; /* フォントサイズを16pxに設定 */
+            background-color: #005731; /* ボタンの背景色を設定 */
+            color: #fff; /* テキストの色を設定 */
+            border: none; /* 境界線をなくす */
+            border-radius: 5px; /* 角丸を設定 */
+            cursor: pointer; /* マウスをホバーしたときにポインターを表示 */
+        }
+
+        /* ボタンのホバースタイル */
+        button:hover {
+            background-color: #005735; /* ホバー時の背景色を変更 */
+        }
+
+        /* テキスト入力エリアのスタイル */
+        textarea {
+            width: 100%;
+            height: 55vh; /* 縦の長さを全体の55%に設定 */
+            margin-top: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        /* コンソール出力エリアのスタイル */
+        .scroll_vertical {
+            font-size: 0.75em;
+            height: 25vh; /* 高さを全体の25%に設定 */
+            overflow: scroll;
+            overflow-x: hidden;
+            border-radius: 8px;
+            background-color: black;
+        }
+    </style>
+</head>
+<html>
+    <body>
+        <p>
+            Pythonコードを入力してください：<br>
+            <textarea id="pythonCode" onkeydown="if(event.keyCode===9){event.preventDefault(); var s = this.selectionStart; this.value = this.value.substring(0,this.selectionStart) + '\t' + this.value.substring(this.selectionEnd); this.selectionEnd = s+1;}"></textarea><br> <!-- TABキーのデフォルトの動作を無効化し、スペースを挿入 -->
+            <button onclick="executePython()">プログラムの実行</button>
+            <button onclick="resetConsole()">コンソールリセット</button>
+        </p>
+        
+        <!-- コンソール出力エリア -->
+        <div class="scroll_vertical">
+            <ul id="id_stdout" class="ul_console"></ul>
+        </div>
+    </body>
+
+    <script>
+        // コンソール出力の定義(書き換えない)
+        const _stdoutElm = document.getElementById("id_stdout");
+        function _displayConsoleOutput(cssClass, ...args) {
+            const li = document.createElement("li")
+            li.setAttribute("class", cssClass);
+            li.innerText = args[0];
+            _stdoutElm.appendChild(li);
+            _stdoutElm.parentElement.scrollTop = _stdoutElm.parentElement.scrollHeight;
+        }
+        const _console_log = console.log;
+        console.log = (...args) => {
+            _console_log(...args);
+            _displayConsoleOutput("log", ...args);
+        };
+        const _console_warn = console.warn;
+        console.warn = (...args) => {
+            _console_warn(args);
+            _displayConsoleOutput("warn", ...args);
+        };
+        const _console_error = console.error;
+        console.error = (...args) => {
+            _console_error(...args);
+            _displayConsoleOutput("error", ...args);
+        }
+        const _console_exception = console.exception;
+        if (_console_exception) {
+            console.exception = (...args) => {
+                _console_exception(...args);
+                _displayConsoleOutput("error", ...args);
+            }
+        } else {
+            console.exception = (...args) => console.error(...args);
+        }
+
+        async function executePython() {
+            var pythonCode = document.getElementById("pythonCode").value;
+            const pyodide = await loadPyodide();
+            await pyodide.loadPackage("micropip");
+            try {
+                await pyodide.runPythonAsync(pythonCode);
+            } catch (err) {
+                //console.error(err);
+                //console.error(err.name);
+                const moduleName = extractModuleNameFromError(String(err));
+                console.log(moduleName[1]);
+                
+                try {
+                    pythonCode = `import micropip\nawait micropip.install('${moduleName[1]}')\n` + pythonCode
+                    await pyodide.runPythonAsync(pythonCode);
+                } catch (err) {
+                    console.error(err);
+                }
+                
+            }
+        }
+
+        // エラーメッセージから"rsa"の部分を取り出す関数
+        function extractModuleNameFromError(errorMessage) {
+            // エラーメッセージが正しい形式であるかどうかを確認
+            if (typeof errorMessage !== 'string') {
+                console.error("Error message is not a string.");
+                return null;
+            }
+            // エラーメッセージからモジュールの部分を正規表現で抽出
+            const match = errorMessage.match(/No module named '([^']+)'/);
+            const match2 = errorMessage.match(/The module '([^']+)' is included/);
+            if (match && match.length > 1) {
+                console.log(`外部ライブラリを検知: ${match[1]}`);
+                // 抽出した結果を返す
+                return [0, match[1]];
+            } else if (match2 && match2.length > 1) {
+                // 抽出した結果を返す
+                return [1, match2[1]];
+            } else {
+                // モジュールの部分が見つからない場合はnullを返す
+                return null;
+            }
+        }
+
+        function resetConsole() {
+            _stdoutElm.innerHTML = ""; // コンソール出力エリアの中身を空にする
+        }
+    </script>
+
+    <style>
+        .ul_console {
+            list-style-type: none;
+            color: yellowgreen;
+            padding-inline-start: 8px;
+        }
+
+        .ul_console li {
+            border-bottom: 1px solid midnightblue;
+        }
+
+        .ul_console li.warn {
+            background-color: rgb(88, 64, 0);
+        }
+
+        .ul_console li.error {
+            background-color: darkred;
+        }
+    </style>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+  <meta name="description" content="Yuyaのポートフォリオ兼ブログページです。" />
+  <title>Pyodideとは？ブラウザでPythonを実行してみよう！</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+  <link href="../css/ress.css" media="all" rel="stylesheet" type="text/css" />
+  <link href="../css/style.css" media="all" rel="stylesheet" type="text/css" />
+  <link rel="shortcut icon" href="../img/YPP_logo.png" />
+  <link rel=”canonical” href=”URLが入る” />
+</head>
+
+<body>
+  <div class="wrapper">
+
+    <!-- header -->
+    <header class="header ">
+      <div class="container"> 
+        <h1 class="header-logo">
+          <div class="container-logo">
+            <a href="#" class="logo-img">
+                <img src="../img/YPP_logo.png" alt="" />
+            </a>
+            <a href="#">
+              <div class="name">Import Yuya</div>
+            </a>
+          </div>
+        </h1>
+
+        <!-- ハンバーガーメニュー-->
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+        <!-- /ハンバーガーメニュー-->
+
+        <nav class="gnav">
+          <ul class="gnav-list">
+            <li class="gnav-item"><a href="../index.html">HOME</a></li>
+            <li class="gnav-item"><a href="../index.html#about">ABOUT</a></li>
+            <li class="gnav-item"><a href="../works.html">WORKS</a></li>
+            <li class="gnav-item"><a href="../posts.html">POSTS</a></li>
+            <!-- <li class="gnav-item"><a href="#skill">SKILL</a></li> -->
+            <li class="gnav-item"><a href="../index.html#contact">CONTACT</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <!-- /header -->
+
+    <!-- main -->
+    <main class="content">
+
+      <!-- パンくずリスト -->
+      <nav class="bread-crumb">
+        <ul>
+          <li><a href="../index.html">ホーム</a></li>
+          <li><a href="../posts.html">POSTS</a></li>
+          <li><span>Pyodideとは？ブラウザでPythonを実行してみよう！</span></li>
+        </ul>
+      </nav>
+      <!-- /パンくずリスト -->
+
+      <article class="article">
+        <div class="article-body">
+          <p class="blue-title">プログラミング</p>
+          <h1 class="article-title">Pyodideとは？ブラウザでPythonを実行してみよう！</h1>
+          <div class="sns-box">
+            <p class="works-date">2024/2/18 更新</p>
+          </div>
+          <!-- 画像 -->
+          <img src="../img/pyodide.jpg" alt="" />
+          <!-- /画像 -->
+          <!-- サブタイトル -->
+          <section>
+            <p>
+              皆さん、Pythonをブラウザで実行できると聞いたらどう思いますか？<br><br>
+              「そんなことができるの？」と思うかもしれませんが、実は「Pyodide」という技術を使えば可能です。<br><br>
+              今回は、Pyodideについて詳しく紹介し、ブラウザ上でPythonを実行する方法を解説します！<br><br>
+            </p>
+          </section>
+          <!-- /サブタイトル -->
+          
+          <!-- 目次 -->
+          <div class="toc-area">
+            <p>目次</p>
+            <ol>
+              <li><a href="#toc1">概要</a></li>
+              <li><a href="#toc2">Pyodideとは？</a></li>
+              <li><a href="#toc3">技術的背景</a></li>
+              <li><a href="#toc4">実際のサイト</a></li>
+              <li><a href="#toc5">Pyodideを使ったプロジェクト例</a></li>
+              <li><a href="#toc6">利点と課題</a></li>
+              <li><a href="#toc7">まとめ</a></li>
+            </ol>
+          </div>
+          <!-- /目次 -->
+
+          <!-- 概要 -->
+          <section id="toc1">
+            <h3>概要</h3>
+            <p>
+              Pyodideは、PythonをWebAssemblyにコンパイルして、<strong>ブラウザ上で実行可能</strong>にするプロジェクトです。<br><br>
+              これにより、Pythonのコードをブラウザで直接動かすことができ、インタラクティブなウェブアプリケーションの開発が<strong>簡単</strong>になります。<br><br>
+              本記事では、Pyodideの基本情報から、実際の利用方法、プロジェクトの例までを紹介します。<br><br>
+            </p>
+          </section>
+          <!-- /概要 -->
+
+          <!-- Pyodideとは？ -->
+          <section id="toc2">
+            <h3>Pyodideとは？</h3>
+            <p>
+              Pyodideは、Mozillaの研究部門から生まれた<strong>オープンソースプロジェクト</strong>です。<br><br>
+              Pythonのインタプリタを<strong>WebAssembly</strong>にコンパイルし、ブラウザ上で動作させることを目的としています。<br><br>
+              これにより、ユーザーは追加のソフトウェアをインストールすることなく、<strong>ブラウザだけで</strong>Pythonのコードを実行できます。<br><br>
+            </p>
+          </section>
+          <!-- /Pyodideとは？ -->
+
+          <!-- 技術的背景 -->
+          <section id="toc3">
+            <h3>技術的背景</h3>
+            <p>
+              Pyodideの核心技術は<strong>WebAssembly（Wasm）</strong>です。<br><br>
+              WebAssemblyは、ブラウザ上でネイティブコードを実行するためのバイナリ形式の命令セットで、高速なパフォーマンスを提供します。<br><br>
+              Pyodideは、このWebAssemblyを利用して、Pythonの実行環境を構築しています。<br><br>
+              また、Pyodideは標準ライブラリだけでなく、NumPyやPandas、Matplotlibといった科学計算やデータ解析に欠かせないライブラリもサポートしています。<br><br>
+              これにより、ブラウザ上で<strong>高度なデータ処理や可視化</strong>が可能になります。<br><br>
+            </p>
+          </section>
+          <!-- /技術的背景 -->
+
+          <!-- 実際のサイト -->
+          <section id="toc4">
+            <h3>実際のサイト</h3>
+            <p>
+              以下が実際のサイトです。
+            </p>
+            <a href="./posts-pyodide_link1.html">Web上で実行できるPython</a>
+          </section>
+          <!-- /実際のサイト -->
+
+          <!-- Pyodideを使ったプロジェクト例 -->
+          <section id="toc5">
+            <h3>Pyodideを使ったプロジェクト例</h3>
+            <p>
+              Pyodideは、データサイエンスや機械学習のプロジェクトに特に有用です。<br><br>
+              例えば、以下のようなプロジェクトが考えられます。<br>
+              <ol>
+                <li>インタラクティブなデータ可視化ツール: MatplotlibやPlotlyを使って、ブラウザ上でリアルタイムにデータを可視化するツール。</li><br>
+                <li>教育用途のコーディング環境: 学習者がブラウザ上でPythonの演習を行えるインタラクティブな学習環境。</li><br>
+                <li>データ解析アプリケーション: Pandasを使ってデータを解析し、その結果をブラウザで表示するアプリケーション。</li><br>
+              </ol>
+              これらのプロジェクトは、Pyodideを使うことでブラウザ上で手軽に実行可能となり、ユーザーは<strong>環境構築の手間を省く</strong>ことができます。<br><br>
+            </p>
+          </section>
+          <!-- /Pyodideを使ったプロジェクト例 -->
+
+          <!-- Pyodideの利点と課題 -->
+          <section id="toc6">
+            <h3>Pyodideの利点と課題</h3>
+            <p>
+              <h4>利点</h4><br>
+              <ul>
+                <li><strong>インストール不要</strong>: ブラウザ上で動作するため、追加のソフトウェアをインストールする必要がありません。</li><br>
+                <li>クロスプラットフォーム: どのOSでも同じように動作するため、環境依存の問題がありません。</li><br>
+                <li>高いパフォーマンス: WebAssemblyの特性により、ネイティブに近い速度でPythonコードを実行できます。</li><br>
+              </ul>
+              <h4>課題</h4><br>
+              <ul>
+                <li><strong>ファイルシステムの制約</strong>: ブラウザのセキュリティモデルにより、ローカルファイルへのアクセスが制限されます。</li><br>
+                <li>依存関係の管理: 一部のPythonライブラリは依存関係の解決が必要で、これが難しい場合があります。</li><br>
+                <li>性能の限界: WebAssemblyの性能は高いですが、ネイティブ環境と比べると制約があります。</li><br>
+              </ul>
+            </p>
+          </section>
+          <!-- /Pyodideの利点と課題 -->
+
+          <!-- まとめ -->
+          <section id="toc7">
+            <h3>まとめ</h3>
+            <p>
+              Pyodideは、ブラウザ上でPythonを実行するための<strong>強力なツール</strong>です。<br><br>
+              データサイエンス、教育、インタラクティブなウェブアプリケーション開発など、さまざまな用途に利用できます。<br><br>
+              課題もありますが、それ以上に多くの利点を提供しています。<br><br>
+              実行環境を考える必要が無いので、簡単なプログラムを動かす時には丁度良いですね！<br><br>
+              本ブログでは<strong>ITに関するテーマ</strong>を多く取り上げているので、他の記事もぜひご覧ください！
+            </p>
+          </section>
+          <!-- /まとめ -->
+
+          <div class="home-link">
+            <a href="../posts.html">Posts一覧へ</a>
+          </div>
+        </div>
+      </article>
+
+      <div class="page-top" id="js-page-top">
+        <span class="material-icons-outlined">expand_less</span>
+      </div>
+    </main>
+
+    <!-- footer -->
+    <footer class="footer">
+      <div class="copyright">&copy;2024 YUYA YODA</div>
+    </footer>
+    <!-- /footer -->
+
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type='text/javascript' src="../js/script.js"></script>
+</body>
+</html>
