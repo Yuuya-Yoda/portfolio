@@ -39,14 +39,26 @@ h3 {
  レイアウト
 ---------------------------------*/
 .wrapper {
-  padding-top: 73px;
+  min-height: 100vh;
+  position: relative;/*←相対位置*/
+  box-sizing: border-box;/*←全て含めてmin-height:100vhに*/
+  padding-top: 70px;
+  padding-bottom: 73px;
 }
 
 .section {
   padding: 90px 0;
 }
 
+.post-section {
+  padding: 0px;
+}
+
 .section:nth-of-type(odd) {
+  background-color: #f7f7f7;
+}
+
+.post-section:nth-of-type(odd) {
   background-color: #f7f7f7;
 }
 
@@ -529,11 +541,14 @@ Posts
  ページトップ
 ---------------------------------*/
 .page-top {
+  width: 100%;
   font-weight: bold;
   padding: 10px;
   cursor: pointer;
   text-align: center;
   background-color: #4c4c4c;
+  position: absolute;/*←絶対位置*/
+  bottom: 72px; /*下に固定*/
 }
 
 .page-top .material-icons-outlined {
@@ -545,6 +560,9 @@ Posts
  フッター
 ---------------------------------*/
 .footer {
+  width: 100%;
+  position: absolute;/*←絶対位置*/
+  bottom: 0; /*下に固定*/
   padding: 30px;
   background-color: #333;
 }
@@ -786,11 +804,18 @@ pre {
 
   /* レイアウト */
   .wrapper {
-    padding-top: 57px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: 96px;
   }
 
   .section {
     padding: 60px 0;
+  }
+
+  .post-section {
+    padding: 0px;
   }
 
   .container {
@@ -924,7 +949,10 @@ pre {
 
   /* フッター */
   .footer {
-    padding: 20px;
+    width: 100%;
+    background-color: #333;
+    text-align: center;
+    padding: 30px;
   }
 
   /* 下層ページ */
