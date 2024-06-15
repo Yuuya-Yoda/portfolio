@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Yuyaのポートフォリオ兼ブログページです。" />
+  <title>RetroFilter</title>
+  <link rel="shortcut icon" href="../../img/import-yuya-logo.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <style>
+    .container {
+      padding: 5px;
+      max-width: 600px;
+      margin-left: calc((100% - 610px)/2); /* 画面幅が400pxを超える場合の値 */
+    }
+    @media (max-width: 610px) {
+      .container {
+        margin-left: 0px;
+      }
+    }
+
+    h2 {
+      font-family: "メイリオ";
+      text-align: center;
+      margin: 0px 0px 0px 0px;
+      padding: 5px;
+      color: white;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      overflow: hidden;
+    }
+
+    .settings {
+      text-align: center;
+    }
+
+    label {
+      color: white;
+    }
+
+    span {
+      color: white;
+    }
+
+    small {
+      color: white;
+      text-align: right;
+    }
+
+    canvas {
+      background-color: #333;
+    }
+
+    .chooseFile {
+      max-width: 124.5px;
+      max-height: 39px;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .button {
+      cursor: pointer;
+      padding: 5px;
+      margin: 0 5px;
+      color: white;
+      background-color: #333;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>RetroFilter</h2>
+    <label for="upload">
+      <img class="chooseFile" src="../../img/RetroFilter-openFolderButton.png" style="cursor: pointer;">
+    </label>
+    <input type="file" id="upload" accept="image/*" style="display: none;">
+    <canvas id="canvas" style="width: 100%;"></canvas>
+    <br>
+    <div class="settings">
+      <label for="brightness">明度:</label>
+      <button class="button" id="decreaseBrightness">-</button>
+      <input type="range" id="brightness" min="0.1" max="2" step="0.01" value="0.6">
+      <button class="button" id="increaseBrightness">+</button>
+      <span id="brightnessValue">0.6</span>
+      <br><br><small>※iPhoneの場合、画像長押しで保存</small>
+    </div>
+    
+  </div>
+  
+  <script>
+    const upload = document.getElementById('upload');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const brightnessSlider = document.getElementById('brightness');
+    const brightnessValue = document.getElementById('brightnessValue');
+    const decreaseBrightness = document.getElementById('decreaseBrightness');
+    const increaseBrightness = document.getElementById('increaseBrightness');
+
+    let originalImageData = null;
+
+    function drawInitialText() {
+        ctx.fillStyle = 'white';
+        ctx.font = '40px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('No Image', canvas.width / 2, canvas.height / 2);
+    }
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth - 10;  // paddingの分減らす
+        canvas.height = canvas.width * 0.75;    // アスペクト比 4:3
+        drawInitialText();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('load', resizeCanvas);
+
+    upload.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                const aspectRatio = img.width / img.height;
+                canvas.width = window.innerWidth - 10;  // paddingの分減らす
+                canvas.height = canvas.width / aspectRatio;
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                applyFilmFilter();
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    brightnessSlider.addEventListener('input', () => {
+        brightnessValue.textContent = brightnessSlider.value;
+        applyFilmFilter();
+    });
+
+    decreaseBrightness.addEventListener('click', () => {
+        let currentValue = parseFloat(brightnessSlider.value);
+        brightnessSlider.value = (currentValue - 0.05).toFixed(2);
+        brightnessValue.textContent = brightnessSlider.value;
+        applyFilmFilter();
+    });
+
+    increaseBrightness.addEventListener('click', () => {
+        let currentValue = parseFloat(brightnessSlider.value);
+        brightnessSlider.value = (currentValue + 0.05).toFixed(2);
+        brightnessValue.textContent = brightnessSlider.value;
+        applyFilmFilter();
+    });
+
+    function applyFilmFilter() {
+        if (!originalImageData) return;
+        
+        const imageData = new ImageData(new Uint8ClampedArray(originalImageData.data), originalImageData.width, originalImageData.height);
+        const data = imageData.data;
+        const brightness = parseFloat(brightnessSlider.value);
+
+        for (let i = 0; i < data.length; i += 4) {
+            let red = data[i];
+            let green = data[i + 1];
+            let blue = data[i + 2];
+
+            // 明度調整
+            red = truncate(red * brightness);
+            green = truncate(green * brightness);
+            blue = truncate(blue * brightness);
+
+            // 色補正
+            red = Math.min(255, red * 1.0);
+            green = Math.min(255, green * 1.0);
+            blue = Math.min(255, blue * 1.0);
+
+            // 黒の強調とコントラスト調整
+            const contrastFactor = 1.5; // コントラストをさらに強調
+            red = truncate(((red - 128) * contrastFactor) + 128);
+            green = truncate(((green - 128) * contrastFactor) + 128);
+            blue = truncate(((blue - 128) * contrastFactor) + 128);
+
+            // 彩度の調整
+            red = Math.min(255, red + 50);
+            green = Math.min(255, green + 50);
+            blue = Math.min(255, blue + 50);
+
+            // 粒状感の追加
+            const grain = (Math.random() - 0.5) * 5;
+            red = truncate(red + grain);
+            green = truncate(green + grain);
+            blue = truncate(blue + grain);
+
+            // ノイズの追加
+            const noise = (Math.random() - 0.5) * 5;
+            red = truncate(red + noise);
+            green = truncate(green + noise);
+            blue = truncate(blue + noise);
+
+            data[i] = red;
+            data[i + 1] = green;
+            data[i + 2] = blue;
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+    }
+
+    function truncate(value) {
+        return Math.min(255, Math.max(0, value));
+    }
+  </script>
+</body>
+</html>
