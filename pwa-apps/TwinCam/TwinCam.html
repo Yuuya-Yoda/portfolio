@@ -4,11 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Yuyaのポートフォリオ兼ブログページです。" />
-  <title>Import Yuya</title>
+  <title>TwinCam</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
   <link rel="shortcut icon" href="../../img/import-yuya-logo.png" />
-  <link rel="canonical" href="https://www.~/"/>
   <link rel="manifest" href="manifest.webmanifest" />
   <style>
     .container {
@@ -22,7 +21,7 @@
     }
 
     h2 {
-      font-style: bold;
+      font-family: "メイリオ";
       text-align: center;
       margin: 0px 0px 0px 0px;
       padding: 5px;
@@ -136,8 +135,8 @@
     const constraints = {
         video: {
             facingMode: 'user', // 初期はインカメラ
-            width: { ideal: 1920, max: 3840 }, // 解像度の設定
-            height: { ideal: 1440, max: 2880 }, // 4:3のアスペクト比を保持
+            width: { ideal: 3840, max: 7680 }, // 解像度の設定
+            height: { ideal: 2160, max: 4320 }, // 4:3のアスペクト比を保持
             aspectRatio: 4 / 3  // アスペクト比の設定
         },
         audio: false
