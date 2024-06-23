@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="description" content="Yuyaのポートフォリオ兼ブログページです。" />
   <title>RetroFilter</title>
   <link rel="shortcut icon" href="../../img/import-yuya-logo.png" />
@@ -31,11 +31,45 @@
       margin: 0;
       padding: 0;
       background-color: black;
-      overflow: hidden;
+      /* overflow: hidden; */
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .header, .footer {
+      position: fixed;
+      width: 100%;
+      height: 100px;
+      left: 0;
+      background-color: black;
+      z-index: 1000;
+      text-align: center;
+      padding: 0px;
+    }
+
+    .footer {
+      position: fixed;
+      width: 100%;
+      height: 130px;
+      left: 0;
+      background-color: black;
+      z-index: 1000;
+      text-align: center;
+      padding: 0px;
+    }
+
+    .header {
+      top: 0;
+    }
+
+    .footer {
+      bottom: 0;
     }
 
     .settings {
       text-align: center;
+      padding: 10px 0;
     }
 
     label {
@@ -55,6 +89,9 @@
       background-color: #333;
       width: 100%;
       height: auto;
+      flex: 1;
+      margin-top: 100px; /* ヘッダーの高さを考慮 */
+      margin-bottom: 130px;
     }
 
     .chooseFile {
@@ -76,7 +113,7 @@
 
     .save-button {
       display: block;
-      margin: 10px auto;
+      margin: 5px;
       padding: 10px 20px;
       color: white;
       background-color: #333;
@@ -91,21 +128,34 @@
 
 <body>
   <div class="container">
-    <h2>RetroFilter</h2>
-    <label for="upload">
-      <img class="chooseFile" src="../../img/RetroFilter-openFolderButton.png" style="cursor: pointer;">
-    </label>
-    <input type="file" id="upload" accept="image/*" style="display: none;">
-    <canvas id="canvas"></canvas>
-    <br>
-    <div class="settings">
-      <label for="brightness">明度:</label>
-      <button class="button" id="decreaseBrightness">-</button>
-      <input type="range" id="brightness" min="0.1" max="2" step="0.01" value="0.6">
-      <button class="button" id="increaseBrightness">+</button>
-      <span id="brightnessValue">0.6</span>
+    <div class="header">
+      <h2>RetroFilter</h2>
+      <label for="upload">
+        <img class="chooseFile" src="../../img/RetroFilter-openFolderButton.png" style="cursor: pointer;">
+      </label>
+      <input type="file" id="upload" accept="image/*" style="display: none;">
     </div>
-    <a id="saveButton" class="save-button">保存</a>
+
+    <canvas id="canvas"></canvas>
+
+    <div class="footer">
+      <div class="settings">
+        <label for="brightness">明度:</label>
+        <button class="button" id="decreaseBrightness">-</button>
+        <input type="range" id="brightness" min="0.1" max="2" step="0.01" value="0.6">
+        <button class="button" id="increaseBrightness">+</button>
+        <span id="brightnessValue">0.6</span>
+        <br>
+        <label for="resolution">画質:</label>
+        <select id="resolution" class="button">
+          <option value="original">オリジナル</option>
+          <option value="1280x720">1280x720</option>
+          <option value="1920x1080">1920x1080</option>
+          <option value="3840x2160">3840x2160</option>
+        </select>
+      </div>
+      <a id="saveButton" class="save-button">保存</a>
+    </div>
   </div>
   
   <script>
@@ -116,6 +166,7 @@
     const brightnessValue = document.getElementById('brightnessValue');
     const decreaseBrightness = document.getElementById('decreaseBrightness');
     const increaseBrightness = document.getElementById('increaseBrightness');
+    const resolutionDropdown = document.getElementById('resolution');
     const saveButton = document.getElementById('saveButton');
 
     let originalImageData = null;
@@ -136,6 +187,10 @@
             const aspectRatio = originalImage.width / originalImage.height;
             displayWidth = window.innerWidth - 10;  // paddingの分減らす
             displayHeight = displayWidth / aspectRatio;
+            if (displayWidth > 590) {
+              displayWidth = 590;
+              displayHeight = displayWidth / aspectRatio
+            }
             canvas.style.width = `${displayWidth}px`;
             canvas.style.height = `${displayHeight}px`;
             applyFilmFilter();
@@ -163,6 +218,7 @@
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                 originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 resizeCanvas();
+                updateResolutionOptions(img.width, img.height);
             };
             img.src = e.target.result;
         };
@@ -190,7 +246,7 @@
 
     function applyFilmFilter() {
         if (!originalImageData) return;
-        
+
         const imageData = new ImageData(new Uint8ClampedArray(originalImageData.data), originalImageData.width, originalImageData.height);
         const data = imageData.data;
         const brightness = parseFloat(brightnessSlider.value);
@@ -239,20 +295,105 @@
         }
 
         ctx.putImageData(imageData, 0, 0);
-        // Remove this line to prevent drawing the image twice:
-        // ctx.drawImage(canvas, 0, 0, originalImage.width, originalImage.height, 0, 0, displayWidth, displayHeight);
+        resizeCanvasToFit();
     }
 
     function truncate(value) {
         return Math.min(255, Math.max(0, value));
     }
 
+    function updateResolutionOptions(width, height) {
+        const options = resolutionDropdown.options;
+
+        for (let i = options.length - 1; i >= 0; i--) {
+            const [resWidth, resHeight] = options[i].value.split('x').map(Number);
+            if (resWidth && resHeight && (resWidth > width || resHeight > height)) {
+                options[i].disabled = true;
+            } else {
+                options[i].disabled = false;
+            }
+        }
+
+        resolutionDropdown.value = "original";
+    }
+
+    function getResolutionDimensions(value) {
+        switch (value) {
+            case '1280x720':
+                return [1280, 720];
+            case '1920x1080':
+                return [1920, 1080];
+            case '3840x2160':
+                return [3840, 2160];
+            default:
+                return [originalImage.width, originalImage.height];
+        }
+    }
+
+    function resizeCanvasToFit() {
+        const selectedResolution = resolutionDropdown.value;
+        const [maxWidth, maxHeight] = getResolutionDimensions(selectedResolution);
+
+        let width = originalImage.width;
+        let height = originalImage.height;
+
+        if (width > maxWidth || height > maxHeight) {
+            const widthRatio = maxWidth / width;
+            const heightRatio = maxHeight / height;
+            const minRatio = Math.min(widthRatio, heightRatio);
+
+            width = width * minRatio;
+            height = height * minRatio;
+        }
+
+        const tempCanvas = document.createElement('canvas');
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCanvas.width = width;
+        tempCanvas.height = height;
+
+        tempCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, width, height);
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(tempCanvas, 0, 0, width, height);
+    }
+
     saveButton.addEventListener('click', () => {
+        const selectedResolution = resolutionDropdown.value;
+        const [maxWidth, maxHeight] = getResolutionDimensions(selectedResolution);
+
+        let width = originalImage.width;
+        let height = originalImage.height;
+
+        if (width > maxWidth || height > maxHeight) {
+            const widthRatio = maxWidth / width;
+            const heightRatio = maxHeight / height;
+            const minRatio = Math.min(widthRatio, heightRatio);
+
+            width = width * minRatio;
+            height = height * minRatio;
+        }
+
+        const tempCanvas = document.createElement('canvas');
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCanvas.width = width;
+        tempCanvas.height = height;
+
+        tempCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, width, height);
+
         const link = document.createElement('a');
         link.download = 'filtered-image.png';
-        link.href = canvas.toDataURL();
+        link.href = tempCanvas.toDataURL();
         link.click();
     });
+  </script>
+  <script>
+    document.addEventListener('touchmove', function (event) {
+      if (event.scale !== 1) {
+        event.preventDefault();
+      }
+    }, { passive: false });
   </script>
 </body>
 </html>
