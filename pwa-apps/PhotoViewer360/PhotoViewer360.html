@@ -9,7 +9,7 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <style>
     body, html {
-        height: calc(100% - 23px);
+        height: calc(100% - 26px);
     }
     #container {
         width: 100%;
@@ -19,95 +19,108 @@
         display: block;
     }
     #fileInput {
-        top: 10px;
-        left: 10px;
-        z-index: 10;
-        margin-bottom: 5px;
+        margin: 5px;
+        margin-left: 20px;
+        text-align: right;
     }
-</style>
+
+    .flex {
+        display: flex;
+    }
+
+    .flex h2 {
+        margin: 0px;
+    }
+  </style>
 </head>
 <body>
-<input type="file" id="fileInput" accept="image/*">
-<div id="container"></div>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
-<script>
-    const fileInput = document.getElementById('fileInput');
-    const container = document.getElementById('container');
+    <div class="flex">
+        <h2>PhotoViewer360</h2>
+        <input type="file" id="fileInput" accept="image/*">
+    </div>
+    <div id="container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const container = document.getElementById('container');
 
-    let camera, scene, renderer, controls;
+        let camera, scene, renderer, controls;
 
-    function init() {
-        const width = container.clientWidth;
-        const height = container.clientHeight;
+        function init() {
+            const width = container.clientWidth;
+            const height = container.clientHeight;
 
-        // シーンを作成
-        scene = new THREE.Scene();
+            // シーンを作成
+            scene = new THREE.Scene();
 
-        // カメラを作成
-        camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-        camera.position.set(0, 0, 0.1);
+            // カメラを作成
+            camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            camera.position.set(0, 0, 0.1);
 
-        // レンダラーを作成
-        renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(width, height);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        container.appendChild(renderer.domElement);
+            // レンダラーを作成
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
 
-        // コントロールを作成
-        controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.enableZoom = false;
-        controls.enablePan = false;
+            // コントロールを作成
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableZoom = false;
+            controls.enablePan = false;
 
-        // 窓のリサイズに対応
-        window.addEventListener('resize', onWindowResize, false);
-    }
+            // スワイプ方向を逆にする
+            controls.rotateSpeed = -1.0; // デフォルトは1.0、逆にするには-1.0に設定
 
-    function onWindowResize() {
-        const width = container.clientWidth;
-        const height = container.clientHeight;
-
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(width, height);
-    }
-
-    function loadTexture(image) {
-        const texture = new THREE.Texture(image);
-        texture.needsUpdate = true;
-
-        const geometry = new THREE.SphereGeometry(500, 80, 80);  // セグメント数を増やす
-        geometry.scale(-1, 1, 1);
-
-        const material = new THREE.MeshBasicMaterial({ map: texture });
-        const mesh = new THREE.Mesh(geometry, material);
-
-        scene.add(mesh);
-    }
-
-    fileInput.addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const image = new Image();
-                image.onload = function() {
-                    loadTexture(image);
-                };
-                image.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+            // 窓のリサイズに対応
+            window.addEventListener('resize', onWindowResize, false);
         }
-    });
 
-    function animate() {
-        requestAnimationFrame(animate);
-        controls.update();
-        renderer.render(scene, camera);
-    }
+        function onWindowResize() {
+            const width = container.clientWidth;
+            const height = container.clientHeight;
 
-    init();
-    animate();
-</script>
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }
+
+        function loadTexture(image) {
+            const texture = new THREE.Texture(image);
+            texture.needsUpdate = true;
+
+            const geometry = new THREE.SphereGeometry(500, 80, 80);  // セグメント数を増やす
+            geometry.scale(-1, 1, 1);
+
+            const material = new THREE.MeshBasicMaterial({ map: texture });
+            const mesh = new THREE.Mesh(geometry, material);
+
+            scene.add(mesh);
+        }
+
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const image = new Image();
+                    image.onload = function() {
+                        loadTexture(image);
+                    };
+                    image.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        init();
+        animate();
+    </script>
 </body>
 </html>
