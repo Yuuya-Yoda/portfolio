@@ -1,0 +1,16 @@
+{
+  "name": "PhotoViewer360",
+  "short_name": "",
+  "start_url": "PhotoViewer360.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "../../img/PhotoViewer360-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
