@@ -9,7 +9,10 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <style>
     body, html {
-        height: calc(100% - 26px);
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background-color: black;
     }
     #container {
         width: 100%;
@@ -17,12 +20,13 @@
     }
     canvas {
         display: block;
-        border-radius: 3%;
+        /* border-radius: 3%; */
     }
     #fileInput {
         margin: 5px;
         margin-left: 20px;
         text-align: right;
+        color: white;
     }
 
     .flex {
@@ -31,6 +35,7 @@
 
     .flex h2 {
         margin: 0px;
+        color: white;
     }
   </style>
 </head>
@@ -71,7 +76,11 @@
             controls.enablePan = false;
 
             // スワイプ方向を逆にする
-            controls.rotateSpeed = -1.0; // デフォルトは1.0、逆にするには-1.0に設定
+            controls.rotateSpeed = -0.5; // デフォルトは1.0、逆にするには-1.0に設定
+
+            // 慣性（ダンピング）を有効にする
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.25; // 慣性の強さを調整
 
             // 窓のリサイズに対応
             window.addEventListener('resize', onWindowResize, false);
@@ -116,7 +125,7 @@
 
         function animate() {
             requestAnimationFrame(animate);
-            controls.update();
+            controls.update(); // コントロールの更新をフレームごとに行う
             renderer.render(scene, camera);
         }
 
